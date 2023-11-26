@@ -79,21 +79,21 @@ public class UI extends JFrame {
 			g.setColor(Color.white);
 			g.fillRect(0, 0, getWidth(), centerY + 30);
 
-			// 선의 굵기를 3으로 설정합니다.
+			// 선의 굵기를 3으로 설정.
 			((Graphics2D) g).setStroke(new BasicStroke(3));
 
-			// 가로로 선을 그립니다.
+			// 벽과 바닥을 구분할 가로선 설정.
 			g.setColor(Color.BLACK);
 			g.drawLine(0, centerY + 30, getWidth(), centerY + 30);
 
-			// 이미지를 불러와서 중앙에 넣습니다.
-			ImageIcon imageIcon = new ImageIcon("차차.png");
-			Image image = imageIcon.getImage();
+			// 중간에 차차 넣기.
+			ImageIcon chachaIcon = new ImageIcon("차차.png");
+			Image chacha = chachaIcon.getImage();
 			int imageWidth = image.getWidth(this);
 			int imageHeight = image.getHeight(this);
 			int x = centerX - imageWidth / 2;
 			int y = centerY - imageHeight / 2;
-			g.drawImage(image, x, y, this);
+			g.drawImage(chacha, x, y, this);
 
 			// 학년 창문 네모 그리기.
 			int grade_windowWidth = getWidth() * 2 / 10;
@@ -150,7 +150,6 @@ public class UI extends JFrame {
 				case "Winter":
 					return new ImageIcon("path_to_winter_icon.png");
 				default:
-					// 지정된 계절 외의 경우에 대한 기본 아이콘 또는 null을 반환할 수 있음
 					return new ImageIcon("path_to_default_icon.png");
 				}
 			} else {
