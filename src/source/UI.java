@@ -190,7 +190,7 @@ public class UI extends JFrame {
 			super.paintComponent(g);
 
 			// 이미지 아이콘 로드
-			ImageIcon moneyIcon = new ImageIcon("./money.png");
+			ImageIcon moneyIcon = new ImageIcon("src/img/money.png");
 			ImageIcon knowledgeIcon = new ImageIcon("src/img/knowledge.png");
 			ImageIcon happinessIcon = new ImageIcon("src/img/Chappiness.png");
 
