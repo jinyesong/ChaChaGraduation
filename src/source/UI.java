@@ -25,7 +25,7 @@ public class UI extends JFrame {
 	int happiness; // 행복 스탯
 
 	public UI() {
-		setSize(Main_WIDTH, Main_HEIGHT);
+		setSize(Main_WIDTH+14, Main_HEIGHT+37);
 		setLayout(null);
 
 		season = "string"; // 초기 계절 = 봄
