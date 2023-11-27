@@ -15,16 +15,23 @@ public class UI extends JFrame {
 	final int Main_WIDTH = 550;
 	final int Main_HEIGHT = 700;
 
-	String season = "string"; // 계절 이름
-	String grade = "1학년"; // 학년
-	int money = 1000; // 돈
-	int clicks = 0; // 클릭수
-	int knowledge = 0; // 초기 지식 스탯
-	int happiness = 70; // 초기 행복 스탯
+	String season; // 계절 이름
+	String grade; // 학년
+	int money; // 돈
+	int clicks; // 클릭수(계절 당 클릭수를 경험치처럼 표현하기 위함)
+	int knowledge; // 지식 스탯
+	int happiness; // 행복 스탯
 
 	public UI() {
 		setSize(Main_WIDTH, Main_HEIGHT);
 		setLayout(null);
+
+		season = "string"; // 초기 계절 = 봄
+		grade = "1학년"; // 초기 학년 = 1학년
+		money = 1000; // 초기 돈 액수 = 1000원
+		clicks = 0; // 초기 클릭수 = 0
+		knowledge = 0; // 초기 지식 스탯
+		happiness = 70; // 초기 행복 스탯
 
 		ChaCha chaChaPanel = new ChaCha();
 		chaChaPanel.setBounds(0, 0, Main_WIDTH, Main_HEIGHT);
