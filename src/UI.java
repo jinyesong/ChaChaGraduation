@@ -96,8 +96,8 @@ public class UI extends JFrame {
 			// 중간에 차차 넣기.
 			ImageIcon chachaIcon = new ImageIcon("./차차.png");
 			Image chacha = chachaIcon.getImage();
-			int imageWidth = image.getWidth(this);
-			int imageHeight = image.getHeight(this);
+			int imageWidth = chacha.getWidth(this);
+			int imageHeight = chacha.getHeight(this);
 			int x = centerX - imageWidth / 2;
 			int y = centerY - imageHeight / 2;
 			g.drawImage(chacha, x, y, this);
