@@ -43,7 +43,7 @@ public class LoginFrame extends JFrame {
         // 패널1
         // 이미지 받아오기
         try {
-            img = ImageIO.read(new File("C:/chacha_graduation/UI/login_page.png"));
+            img = ImageIO.read(new File("./login_page.png"));
         } catch (IOException e) {
             System.out.println("이미지 불러오기 실패");
             System.exit(0);
@@ -63,7 +63,7 @@ public class LoginFrame extends JFrame {
         loginTextField.setBorder(javax.swing.BorderFactory.createEmptyBorder());
         
         // 로그인버튼 추가
-        bt = new JButton(new ImageIcon("C:/chacha_graduation/UI/login_button.png"));
+        bt = new JButton(new ImageIcon("./login_button.png"));
         bt.setBounds(215, 450, 100, 55);
  
         // 버튼 투명처리
