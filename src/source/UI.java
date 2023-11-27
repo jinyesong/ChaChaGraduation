@@ -96,7 +96,7 @@ public class UI extends JFrame {
 			g.drawLine(0, centerY + 30, getWidth(), centerY + 30);
 
 			// 중간에 차차 넣기.
-			ImageIcon chachaIcon = new ImageIcon("./차차.png");
+			ImageIcon chachaIcon = new ImageIcon("src/img/차차.png");
 			Image chacha = chachaIcon.getImage();
 			int imageWidth = chacha.getWidth(this);
 			int imageHeight = chacha.getHeight(this);
@@ -191,8 +191,8 @@ public class UI extends JFrame {
 
 			// 이미지 아이콘 로드
 			ImageIcon moneyIcon = new ImageIcon("./money.png");
-			ImageIcon knowledgeIcon = new ImageIcon("./knowledge.png");
-			ImageIcon happinessIcon = new ImageIcon("./Chappiness.png");
+			ImageIcon knowledgeIcon = new ImageIcon("src/img/knowledge.png");
+			ImageIcon happinessIcon = new ImageIcon("src/img/Chappiness.png");
 
 			// 간격 설정
 			int gap = 10;
@@ -255,30 +255,30 @@ public class UI extends JFrame {
 	class Below extends JPanel {
 		JLabel study_label, work_label, sleep_label, eat_label, play_label;
 		JButton studyButton, workButton, sleepButton, eatButton, playButton;
-		Action eventListener = new Action();
+		//Action eventListener = new Action();
 
 		public Below() {
 			setLayout(null);
 
 			// 차차 액션 아이콘 및 버튼 불러오기
-			ImageIcon studyIcon = new ImageIcon("./study.png");
-			ImageIcon workIcon = new ImageIcon("./work.png");
-			ImageIcon sleepIcon = new ImageIcon("./sleep.png");
-			ImageIcon eatIcon = new ImageIcon("./eat.png");
-			ImageIcon playIcon = new ImageIcon("./play.png");
+			ImageIcon studyIcon = new ImageIcon("src/img/study.png");
+			ImageIcon workIcon = new ImageIcon("src/img/work.png");
+			ImageIcon sleepIcon = new ImageIcon("src/img/sleep.png");
+			ImageIcon eatIcon = new ImageIcon("src/img/eat.png");
+			ImageIcon playIcon = new ImageIcon("src/img/play.png");
 
-			studyButton = new JButton(new ImageIcon("./study_button.png"));
-			workButton = new JButton(new ImageIcon("./work_button.png"));
-			sleepButton = new JButton(new ImageIcon("./sleep_button.png"));
-			eatButton = new JButton(new ImageIcon("./eat_button.png"));
-			playButton = new JButton(new ImageIcon("./play_button.png"));
+			studyButton = new JButton(new ImageIcon("src/img/study_button.png"));
+			workButton = new JButton(new ImageIcon("src/img/work_button.png"));
+			sleepButton = new JButton(new ImageIcon("src/img/sleep_button.png"));
+			eatButton = new JButton(new ImageIcon("src/img/eat_button.png"));
+			playButton = new JButton(new ImageIcon("src/img/play_button.png"));
 
 			// 각 버튼에 액션 이벤트 리스너 추가
-			studyButton.addActionListener(eventListener);
-			workButton.addActionListener(eventListener);
-			sleepButton.addActionListener(eventListener);
-			eatButton.addActionListener(eventListener);
-			playButton.addActionListener(eventListener);
+//			studyButton.addActionListener(eventListener);
+//			workButton.addActionListener(eventListener);
+//			sleepButton.addActionListener(eventListener);
+//			eatButton.addActionListener(eventListener);
+//			playButton.addActionListener(eventListener);
 
 			study_label = new JLabel();
 			work_label = new JLabel();

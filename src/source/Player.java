@@ -2,55 +2,81 @@ package source;
 
 public class Player {
 	String id;
-	int money;
-	int knowledge;
-	int happiness;
-	int level;
+	private int money;
+	private int knowledge;
+	private int happiness;
+	private int level;
 	
-	public Player(String id) { //½Å±Ô
+	public Player(String id) { //ì‹ ê·œ
 		this.id = id;
-		money = 0;
-		knowledge = 0;
-		happiness = 70;
-		level = 1;
+		setMoney(0);
+		setKnowledge(0);
+		setHappiness(70);
+		setLevel(1);
 	}
 	
-	public Player(String id, int money, int knowledge, int happiness, int level) { //±âÁ¸
+	public Player(String id, int money, int knowledge, int happiness, int level) { //ê¸°ì¡´
 		this.id = id;
-		this.money = money;
-		this.knowledge = knowledge;
-		this.happiness = happiness;
-		this.level = level;
+		this.setMoney(money);
+		this.setKnowledge(knowledge);
+		this.setHappiness(happiness);
+		this.setLevel(level);
 	}
 	
 	public int[] getPlayerInfo() {
-		int[] info = {money, knowledge, happiness, level};
+		int[] info = {getMoney(), getKnowledge(), getHappiness(), getLevel()};
 		return info;
 	}
-	public String getId() {
-		return id;
-	}
-    public void updateMoney(int money) {
-    	this.money = money;
-    }
-    public void updateKnowledge(int knowledge) {
-    	this.knowledge = knowledge;
-    }
-    public void updateHappiness(int happiness) {
-    	this.happiness = happiness;
-    }
+	
     public void levelUp() {
-    	level++;
+    	setLevel(getLevel() + 1);
     }
+    
     public String checkEndingConditions() {
-    	if(money < 500) { //È­¼® ¿£µù(BAD)
+    	if(getMoney() < 500) { //í™”ì„ì—”ë”©(BAD)
     		return "BAD";
     	}
-    	else if(500 < money && money < 800) { //Á¹¾÷ ¿£µù(GOOD)
+    	else if(500 < getMoney() && getMoney() < 800) { //ì¡¸ì—… ì—”ë”©(GOOD)
     		return "GOOD";
     	}
-    	else { //´ëÇÐ¿ø ¿£µù(HAPPY)
+    	else { //ëŒ€í•™ì› ì—”ë”©(HAPPY)
     		return "HAPPY";
     	}
     }
+    
+	public String getId() {
+		return id;
+	}
+
+	public int getMoney() {
+		return money;
+	}
+
+	public void setMoney(int money) {
+		this.money = money;
+	}
+
+	public int getKnowledge() {
+		return knowledge;
+	}
+
+	public void setKnowledge(int knowledge) {
+		this.knowledge = knowledge;
+	}
+	
+	public int getHappiness() {
+		return happiness;
+	}
+	
+	public void setHappiness(int happiness) {
+		this.happiness = happiness;
+	}
+
+	public int getLevel() {
+		return level;
+	}
+
+	public void setLevel(int level) {
+		this.level = level;
+	}
 }
