@@ -31,11 +31,11 @@ public class GameManager {
     }
 
     public void Buttons() {
-        studyButton.addActionListener(e -> performActionAndCheckHappiness(new StudyAction()));
-        workButton.addActionListener(e -> performActionAndCheckHappiness(new WorkAction()));
-        sleepButton.addActionListener(e -> performActionAndCheckHappiness(new SleepAction()));
-        eatButton.addActionListener(e -> performActionAndCheckHappiness(new EatAction()));
-        playButton.addActionListener(e -> performActionAndCheckHappiness(new HaveFunAction()));
+        //studyButton.addActionListener(e -> performActionAndCheckHappiness(new StudyAction()));
+        //workButton.addActionListener(e -> performActionAndCheckHappiness(new WorkAction()));
+        //sleepButton.addActionListener(e -> performActionAndCheckHappiness(new SleepAction()));
+        //eatButton.addActionListener(e -> performActionAndCheckHappiness(new EatAction()));
+        //playButton.addActionListener(e -> performActionAndCheckHappiness(new HaveFunAction()));
     }
 
     public void performActionAndCheckHappiness(Action action) {

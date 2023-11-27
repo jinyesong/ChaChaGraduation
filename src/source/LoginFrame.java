@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Font;
 
 import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -13,11 +15,12 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
  
-public class LoginFrame extends JFrame {
+public class LoginFrame extends JFrame implements ActionListener{
  
     BufferedImage img = null;
     JTextField loginTextField;
@@ -44,7 +47,7 @@ public class LoginFrame extends JFrame {
         // 패널1
         // 이미지 받아오기
         try {
-            img = ImageIO.read(new File("./login_page.png"));
+            img = ImageIO.read(new File("src/img/login_page.png"));
         } catch (IOException e) {
             System.out.println("이미지 불러오기 실패");
             System.exit(0);
@@ -64,8 +67,9 @@ public class LoginFrame extends JFrame {
         loginTextField.setBorder(javax.swing.BorderFactory.createEmptyBorder());
         
         // 로그인버튼 추가
-        bt = new JButton(new ImageIcon("./login_button.png"));
+        bt = new JButton(new ImageIcon("src/img/login_button.png"));
         bt.setBounds(215, 450, 100, 55);
+        bt.addActionListener(this);
  
         // 버튼 투명처리
         bt.setBorderPainted(false);
@@ -85,5 +89,32 @@ public class LoginFrame extends JFrame {
             g.drawImage(img, 0, 0, null);
         }
     }
- 
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource() == bt) {
+			String id = loginTextField.getText();
+			FileIO fi = new FileIO();
+//			if(id == "") { //빈문자열
+//				System.out.println("비어있음");
+//				actionPerformed(e);
+//			}
+			Player player;
+			if(fi.findPlayer(id)) { //존재하는 아이디
+				JOptionPane.showMessageDialog(null, "로그인 성공!.");
+				player = fi.loadGame(id);
+				this.setVisible(false); //프레임 전환
+				new UI(player);
+			}else { //존재하지 않는 아이디
+				int result = 0;
+				result = JOptionPane.showConfirmDialog(null, "존재하지 않는 아이디입니다. 새로 생성하시겠습니까?");
+				System.out.println(result);
+				if(result == 0) { //새로 생성
+					player = fi.createPlayerFile(id); 
+					this.setVisible(false); //프레임 전환
+					new UI(player);
+				}
+			}
+		}
+	}
 }

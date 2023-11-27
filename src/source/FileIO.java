@@ -1,23 +1,30 @@
 package source;
 
+import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Reader;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 
 public class FileIO {
-	public void saveGame(Player player, Game game) {
+	
+	public void saveGame(Player player, GameManager game) {
 		int[] info = player.getPlayerInfo();
-		//game Ω√∞£ ¡§∫∏ µÓ
+
 		JSONObject json = new JSONObject();
 		json.put("money", info[0]);
 		json.put("knowledge", info[1]);
 		json.put("happiness", info[2]);
 		json.put("level", info[3]);
 
-        // ∆ƒ¿œø° JSON «¸Ωƒ¿∏∑Œ ¿˙¿Â
         try (FileWriter file = new FileWriter( player.getId() + ".txt")) {
             file.write(json.toJSONString());
             file.flush();
@@ -26,25 +33,54 @@ public class FileIO {
         }
 	}
 	
-    public Player loadGame() { //testøÎ
-    	Player player = new Player("test", 500, 100, 100, 2);
+    public Player loadGame(String id) {
+    	int money = 0;
+    	int knowledge = 0;
+    	int happiness = 70;
+    	int level = 1;
+    	try {
+    		String filePath = "src/user/" + id + ".txt";
+    		
+    		JSONParser parser = new JSONParser();
+    		Reader reader = new FileReader(filePath);
+    		JSONObject json = (JSONObject)parser.parse(reader);
+    		
+    		money = ((Long) json.get("money")).intValue();
+            knowledge = ((Long) json.get("knowledge")).intValue();
+            happiness = ((Long) json.get("happiness")).intValue();
+            level = ((Long) json.get("level")).intValue();
+            System.out.println(money+knowledge+happiness+level);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    	Player player = new Player(id, money, knowledge, happiness, level);
     	return player;
     }
     
-    public static void createPlayerFile(String playerId) { //ªı∑ŒøÓ ¿Ø¿˙ ª˝º∫
+    public Player createPlayerFile(String id) { 
     	JSONObject json = new JSONObject();
-		json.put("money", 4000);
-		json.put("knowledge", 100);
-		json.put("happiness", 100);
-		json.put("level", 2);
+		json.put("money", 0);
+		json.put("knowledge", 0);
+		json.put("happiness", 70);
+		json.put("level", 1);
 
-        // ∆ƒ¿œø° JSON «¸Ωƒ¿∏∑Œ ¿˙¿Â
-        try (FileWriter file = new FileWriter( "src/user/" + playerId + ".txt")) {
+        try (FileWriter file = new FileWriter("src/user/" + id + ".txt")) {
             file.write(json.toJSONString());
             file.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
+        Player player = new Player(id);
+        return player;
+    }
+    
+    public boolean findPlayer(String id) {
+    	String filePath = "src/user/" + id + ".txt";
+    	File file = new File(filePath);
+    	if(!file.exists()) { //ÌååÏùº Ïù¥Î¶ÑÏù¥ Ï°¥Ïû¨ÌïòÎ©¥ false
+    		return false; 
+    	}
+    	return true;
     }
     
     //public void deletePlayerFile(String playerID);
