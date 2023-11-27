@@ -188,9 +188,9 @@ public class UI extends JFrame {
 			super.paintComponent(g);
 
 			// 이미지 아이콘 로드
-			ImageIcon moneyIcon = new ImageIcon("money.png");
-			ImageIcon knowledgeIcon = new ImageIcon("knowledge.png");
-			ImageIcon happinessIcon = new ImageIcon("Chappiness.png");
+			ImageIcon moneyIcon = new ImageIcon("./money.png");
+			ImageIcon knowledgeIcon = new ImageIcon("./knowledge.png");
+			ImageIcon happinessIcon = new ImageIcon("./Chappiness.png");
 
 			// 간격 설정
 			int gap = 10;
