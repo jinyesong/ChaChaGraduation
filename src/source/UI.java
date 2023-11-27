@@ -18,22 +18,22 @@ public class UI extends JFrame {
 	final int Main_HEIGHT = 700;
 
 	String season; // 계절 이름
-	String grade; // 학년
+	int grade; // 학년
 	int money; // 돈
 	int clicks; // 클릭수(계절 당 클릭수를 경험치처럼 표현하기 위함)
 	int knowledge; // 지식 스탯
 	int happiness; // 행복 스탯
 
-	public UI() {
+	public UI(Player player) {
 		setSize(Main_WIDTH+14, Main_HEIGHT+37);
 		setLayout(null);
 
 		season = "string"; // 초기 계절 = 봄
-		grade = "1학년"; // 초기 학년 = 1학년
-		money = 1000; // 초기 돈 액수 = 1000원
+		grade = player.getLevel(); // 초기 학년 = 1학년
+		money = player.getMoney(); // 초기 돈 액수 = 1000원
 		clicks = 0; // 초기 클릭수 = 0
-		knowledge = 0; // 초기 지식 스탯
-		happiness = 70; // 초기 행복 스탯
+		knowledge = player.getKnowledge(); // 초기 지식 스탯
+		happiness = player.getHappiness(); // 초기 행복 스탯
 
 		ChaCha chaChaPanel = new ChaCha();
 		chaChaPanel.setBounds(0, 0, Main_WIDTH, Main_HEIGHT);
@@ -51,10 +51,6 @@ public class UI extends JFrame {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
 
-	public static void main(String[] args) {
-		new UI();
-	}
-
 	class ChaCha extends JPanel {
 		JLabel gradeLabel;
 
@@ -62,14 +58,13 @@ public class UI extends JFrame {
 			setSize(550, 700);
 			setLayout(null);
 
-			gradeLabel = new JLabel(grade);
+			gradeLabel = new JLabel(Integer.toString(grade));
 			gradeLabel.setFont(new Font("Serif", Font.BOLD, 25));
 			gradeLabel.setHorizontalAlignment(JLabel.CENTER);
 			gradeLabel.setVerticalAlignment(JLabel.CENTER);
 
 			// money 레이블을 패널에 추가
 			add(gradeLabel);
-
 		}
 
 		@Override

@@ -93,26 +93,26 @@ public class LoginFrame extends JFrame implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == bt) {
-			System.out.println("동작");
 			String id = loginTextField.getText();
 			FileIO fi = new FileIO();
 //			if(id == "") { //빈문자열
 //				System.out.println("비어있음");
 //				actionPerformed(e);
 //			}
+			Player player;
 			if(fi.findPlayer(id)) { //존재하는 아이디
-				fi.loadGame(id);
+				JOptionPane.showMessageDialog(null, "로그인 성공!.");
+				player = fi.loadGame(id);
 				this.setVisible(false); //프레임 전환
-				new UI();
+				new UI(player);
 			}else { //존재하지 않는 아이디
 				int result = 0;
 				result = JOptionPane.showConfirmDialog(null, "존재하지 않는 아이디입니다. 새로 생성하시겠습니까?");
 				System.out.println(result);
-				if(result == 0) { //확인
-					fi.createPlayerFile(id); 
-				}
-				else { //취소
-					
+				if(result == 0) { //새로 생성
+					player = fi.createPlayerFile(id); 
+					this.setVisible(false); //프레임 전환
+					new UI(player);
 				}
 			}
 		}

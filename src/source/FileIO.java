@@ -45,10 +45,11 @@ public class FileIO {
     		Reader reader = new FileReader(filePath);
     		JSONObject json = (JSONObject)parser.parse(reader);
     		
-            money = (int)json.get("money");
-            knowledge = (int)json.get("knowledge");
-            happiness = (int)json.get("happiness");
-            level = (int)json.get("level"); 
+    		money = ((Long) json.get("money")).intValue();
+            knowledge = ((Long) json.get("knowledge")).intValue();
+            happiness = ((Long) json.get("happiness")).intValue();
+            level = ((Long) json.get("level")).intValue();
+            System.out.println(money+knowledge+happiness+level);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -63,7 +64,7 @@ public class FileIO {
 		json.put("happiness", 70);
 		json.put("level", 1);
 
-        try (FileWriter file = new FileWriter( "src/user/" + id + ".txt")) {
+        try (FileWriter file = new FileWriter("src/user/" + id + ".txt")) {
             file.write(json.toJSONString());
             file.flush();
         } catch (IOException e) {
