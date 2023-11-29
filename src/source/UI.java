@@ -28,9 +28,9 @@ public class UI extends JFrame {
 		setSize(Main_WIDTH+14, Main_HEIGHT+37);
 		setLayout(null);
 
-		season = "string"; // 초기 계절 = 봄
+		season = "Spring"; // 초기 계절 = 봄
 		grade = player.getLevel(); // 초기 학년 = 1학년
-		money = player.getMoney(); // 초기 돈 액수 = 1000원
+		money = player.getMoney(); // 초기 돈 액수 = 0원
 		clicks = 0; // 초기 클릭수 = 0
 		knowledge = player.getKnowledge(); // 초기 지식 스탯
 		happiness = player.getHappiness(); // 초기 행복 스탯
@@ -58,13 +58,26 @@ public class UI extends JFrame {
 			setSize(550, 700);
 			setLayout(null);
 
+			//학년 label 추가하기
 			gradeLabel = new JLabel(Integer.toString(grade));
 			gradeLabel.setFont(new Font("Serif", Font.BOLD, 25));
 			gradeLabel.setHorizontalAlignment(JLabel.CENTER);
 			gradeLabel.setVerticalAlignment(JLabel.CENTER);
-
-			// money 레이블을 패널에 추가
 			add(gradeLabel);
+
+			//저장, 로그아웃 버튼 추가하기
+			logoutIcon = new ImageIcon("src/img/logout_button.png");
+			logoutButton = new JButton(logoutIcon);
+			saveIcon = new ImageIcon("src/img/save_button.png");
+			saveButton = new JButton(saveIcon);
+			
+			for (JButton button : new JButton[] { saveButton, logoutButton }) {
+				button.setBorderPainted(false);
+				button.setFocusPainted(false);
+				button.setContentAreaFilled(false);
+				
+				add(button);
+			}
 		}
 
 		@Override
@@ -140,6 +153,10 @@ public class UI extends JFrame {
 			// 계절 창문 창틀 그리기
 			g.setColor(Color.BLACK);
 			g.drawRect(season_frameX, season_frameY, season_frameWidth, season_frameHeight);
+
+			//저장, 로그아웃 버튼 위치시키기
+			saveButton.setBounds(getWidth()-saveIcon.getIconWidth()-5, centerY+35-saveIcon.getIconHeight(), saveIcon.getIconWidth(), saveIcon.getIconHeight());
+			logoutButton.setBounds(getWidth()-saveIcon.getIconWidth()-5, centerY+35, logoutIcon.getIconWidth(), logoutIcon.getIconHeight());
 		}
 
 		private ImageIcon getFrameIconForSeason(String season) {
@@ -303,13 +320,13 @@ public class UI extends JFrame {
 			icon_gap += iconWidth + 10;
 			button_gap += buttonWidth + 13;
 
-			work_label.setBounds(icon_gap - 30, y, iconWidth, iconHeight);
+			work_label.setBounds(icon_gap - 30, y + 5, iconWidth, iconHeight);
 			workButton.setBounds(button_gap, y + iconHeight, buttonWidth, buttonHeight);
 
 			icon_gap += iconWidth + 5;
 			button_gap += buttonWidth + 13;
 
-			sleep_label.setBounds(icon_gap - 43, y - 4, iconWidth, iconHeight);
+			sleep_label.setBounds(icon_gap - 45, y - 5, iconWidth, iconHeight);
 			sleepButton.setBounds(button_gap, y + iconHeight, buttonWidth, buttonHeight);
 
 			icon_gap += iconWidth + 5;
@@ -328,6 +345,7 @@ public class UI extends JFrame {
 				button.setBorderPainted(false);
 				button.setFocusPainted(false);
 				button.setContentAreaFilled(false);
+				add(button);
 			}
 
 			add(study_label);
@@ -335,12 +353,6 @@ public class UI extends JFrame {
 			add(sleep_label);
 			add(eat_label);
 			add(play_label);
-
-			add(studyButton);
-			add(workButton);
-			add(sleepButton);
-			add(eatButton);
-			add(playButton);
 
 			setOpaque(true); // 패널 배경을 투명하게 설정
 		}
