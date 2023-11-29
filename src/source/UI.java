@@ -345,6 +345,7 @@ public class UI extends JFrame {
 				button.setBorderPainted(false);
 				button.setFocusPainted(false);
 				button.setContentAreaFilled(false);
+				add(button);
 			}
 
 			add(study_label);
@@ -352,12 +353,6 @@ public class UI extends JFrame {
 			add(sleep_label);
 			add(eat_label);
 			add(play_label);
-
-			add(studyButton);
-			add(workButton);
-			add(sleepButton);
-			add(eatButton);
-			add(playButton);
 
 			setOpaque(true); // 패널 배경을 투명하게 설정
 		}
