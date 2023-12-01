@@ -17,23 +17,25 @@ public class UI extends JFrame {
 	final int Main_WIDTH = 550;
 	final int Main_HEIGHT = 700;
 
-	String season; // 계절 이름
-	int grade; // 학년
-	int money; // 돈
-	int clicks; // 클릭수(계절 당 클릭수를 경험치처럼 표현하기 위함)
-	int knowledge; // 지식 스탯
-	int happiness; // 행복 스탯
+	Player player; 
+	int season; // 계절 1: Spring, 2: Summer, 3: Fall, 4: Winter
+//	int grade; // 학년
+//	int money; // 돈
+//	int clicks; // 클릭수(계절 당 클릭수를 경험치처럼 표현하기 위함)
+//	int knowledge; // 지식 스탯
+//	int happiness; // 행복 스탯
 
 	public UI(Player player) {
 		setSize(Main_WIDTH+14, Main_HEIGHT+37);
 		setLayout(null);
 
-		season = "Spring"; // 초기 계절 = 봄
-		grade = player.getLevel(); // 초기 학년 = 1학년
-		money = player.getMoney(); // 초기 돈 액수 = 0원
-		clicks = 0; // 초기 클릭수 = 0
-		knowledge = player.getKnowledge(); // 초기 지식 스탯
-		happiness = player.getHappiness(); // 초기 행복 스탯
+		this.player = player;
+		season = player.timeManager.getSeason(); // 초기 계절 = 봄
+//		grade = player.getLevel(); // 초기 학년 = 1학년
+//		money = player.getMoney(); // 초기 돈 액수 = 0원
+//		clicks = 0; // 초기 클릭수 = 0
+//		knowledge = player.getKnowledge(); // 초기 지식 스탯
+//		happiness = player.getHappiness(); // 초기 행복 스탯
 
 		ChaCha chaChaPanel = new ChaCha();
 		chaChaPanel.setBounds(0, 0, Main_WIDTH, Main_HEIGHT);
@@ -43,7 +45,7 @@ public class UI extends JFrame {
 		statPanel.setBounds(0, 0, Main_WIDTH, 100); // ChaCha 패널과 크기를 맞춤
 		chaChaPanel.add(statPanel); // ChaCha 패널에 Stat 패널 추가
 
-		Below belowPanel = new Below();
+		Below belowPanel = new Below(0); //현재까지의 clicks 수 인자
 		belowPanel.setBounds(0, 470, Main_WIDTH, Main_HEIGHT);
 		chaChaPanel.add(belowPanel);
 
@@ -61,7 +63,7 @@ public class UI extends JFrame {
 			setLayout(null);
 
 			//학년 label 추가하기
-			gradeLabel = new JLabel(Integer.toString(grade));
+			gradeLabel = new JLabel(Integer.toString(player.getLevel()));
 			gradeLabel.setFont(new Font("Serif", Font.BOLD, 25));
 			gradeLabel.setHorizontalAlignment(JLabel.CENTER);
 			gradeLabel.setVerticalAlignment(JLabel.CENTER);
@@ -161,22 +163,17 @@ public class UI extends JFrame {
 			logoutButton.setBounds(getWidth()-saveIcon.getIconWidth()-5, centerY+35, logoutIcon.getIconWidth(), logoutIcon.getIconHeight());
 		}
 
-		private ImageIcon getFrameIconForSeason(String season) {
-			if (season != null) {
-				switch (season) {
-				case "Spring":
-					return new ImageIcon("path_to_spring_icon.png");
-				case "Summer":
-					return new ImageIcon("path_to_summer_icon.png");
-				case "Autumn":
-					return new ImageIcon("path_to_autumn_icon.png");
-				case "Winter":
-					return new ImageIcon("path_to_winter_icon.png");
-				default:
-					return new ImageIcon("path_to_default_icon.png");
-				}
-			} else {
-				// season이 null인 경우에 대한 처리
+		private ImageIcon getFrameIconForSeason(int season) {
+			switch (season) {
+			case 1:
+				return new ImageIcon("path_to_spring_icon.png");
+			case 2:
+				return new ImageIcon("path_to_summer_icon.png");
+			case 3:
+				return new ImageIcon("path_to_autumn_icon.png");
+			case 4:
+				return new ImageIcon("path_to_winter_icon.png");
+			default:
 				return new ImageIcon("path_to_default_icon.png");
 			}
 		}
@@ -188,7 +185,7 @@ public class UI extends JFrame {
 
 		public Stat() {
 			// money 레이블 초기화 및 설정
-			moneyLabel = new JLabel("" + money);
+			moneyLabel = new JLabel("" + player.getMoney());
 			moneyLabel.setFont(new Font("Serif", Font.BOLD, 25));
 			moneyLabel.setHorizontalAlignment(JLabel.CENTER);
 			moneyLabel.setVerticalAlignment(JLabel.CENTER);
@@ -241,7 +238,7 @@ public class UI extends JFrame {
 			gap += iconWidth;
 
 			// 지식 스탯 표시하는 직사각형 그리기
-			drawStatRectangle(g, knowledge, gap - 13, y + 6, rectangleWidth, iconHeight - 10);
+			drawStatRectangle(g, player.getKnowledge(), gap - 13, y + 6, rectangleWidth, iconHeight - 10);
 			gap += 120;
 
 			// 행복도 아이콘 그리기
@@ -249,7 +246,7 @@ public class UI extends JFrame {
 			gap += iconWidth;
 
 			// 행복도 스탯 표시하는 직사각형 그리기
-			drawStatRectangle(g, happiness, gap - 13, y + 6, rectangleWidth, iconHeight - 10);
+			drawStatRectangle(g, player.getHappiness(), gap - 13, y + 6, rectangleWidth, iconHeight - 10);
 		}
 
 		// 스탯에 따라 직사각형 색깔 채우기
@@ -267,13 +264,15 @@ public class UI extends JFrame {
 	}
 
 	class Below extends JPanel {
+		int clicks;
 		JLabel study_label, work_label, sleep_label, eat_label, play_label;
 		JButton studyButton, workButton, sleepButton, eatButton, playButton;
 		//Action eventListener = new Action();
 
-		public Below() {
+		public Below(int clicks) {
 			setLayout(null);
-
+			this.clicks = clicks;
+			
 			// 차차 액션 아이콘 및 버튼 불러오기
 			ImageIcon studyIcon = new ImageIcon("src/img/study.png");
 			ImageIcon workIcon = new ImageIcon("src/img/work.png");
@@ -288,7 +287,12 @@ public class UI extends JFrame {
 			playButton = new JButton(new ImageIcon("src/img/play_button.png"));
 
 			// 각 버튼에 액션 이벤트 리스너 추가
-//			studyButton.addActionListener(eventListener);
+			studyButton.addActionListener(e -> {
+                player.setKnowledge(player.getKnowledge()+10);
+                player.setHappiness(player.getHappiness()-5);
+                
+                //dispose(); // 창 닫기
+            });
 //			workButton.addActionListener(eventListener);
 //			sleepButton.addActionListener(eventListener);
 //			eatButton.addActionListener(eventListener);
@@ -361,6 +365,7 @@ public class UI extends JFrame {
 
 		@Override
 		protected void paintComponent(Graphics g) {
+			clicks++;
 			drawClickRectangle(g, clicks, 0, getHeight() - 30, getWidth(), getHeight());
 		}
 
