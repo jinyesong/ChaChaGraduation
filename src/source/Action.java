@@ -29,9 +29,9 @@ public class Action {
     // 행동을 수행하는 메서드
     public void performAction(Player player) {
         // 플레이어의 속성을 행동에 따라 조정
-//        player.setKnowledge(player.getKnowledge() + knowledgeEffect);
-//        player.setHappiness(player.getHappiness() + happinessEffect);
-//        player.setMoney(player.getMoney() + moneyEffect);
+        player.setKnowledge(player.getKnowledge() + knowledgeEffect);
+        player.setHappiness(player.getHappiness() + happinessEffect);
+        player.setMoney(player.getMoney() + moneyEffect);
     }
 }
 class EatAction extends Action{

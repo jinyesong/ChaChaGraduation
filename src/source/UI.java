@@ -255,7 +255,6 @@ public class UI extends JFrame {
 	class Below extends JPanel {
 		JLabel study_label, work_label, sleep_label, eat_label, play_label;
 		JButton studyButton, workButton, sleepButton, eatButton, playButton;
-		Action eventListener = new Action();
 
 		public Below() {
 			setLayout(null);
@@ -273,12 +272,18 @@ public class UI extends JFrame {
 			eatButton = new JButton(new ImageIcon("./eat_button.png"));
 			playButton = new JButton(new ImageIcon("./play_button.png"));
 
+			Action study = new StudyAction();
+			Action sleep = new SleepAction();
+			Action partTimeJob = new PartTimeJobAction();
+			Action haveFun = new HaveFunAction();
+			Action eat = new EatAction();
+
 			// 각 버튼에 액션 이벤트 리스너 추가
-			studyButton.addActionListener(eventListener);
-			workButton.addActionListener(eventListener);
-			sleepButton.addActionListener(eventListener);
-			eatButton.addActionListener(eventListener);
-			playButton.addActionListener(eventListener);
+			studyButton.addActionListener(e -> study.performAction(player));
+			workButton.addActionListener(e -> partTimeJob.performAction(player));
+			sleepButton.addActionListener(e -> sleep.performAction(player));
+			eatButton.addActionListener(e -> eat.performAction(player));
+			playButton.addActionListener(e -> haveFun.performAction(player));
 
 			study_label = new JLabel();
 			work_label = new JLabel();

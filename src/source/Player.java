@@ -30,15 +30,24 @@ public class Player {
 	public String getId() {
 		return id;
 	}
-    public void updateMoney(int money) {
-    	this.money = money;
+    public void setMoney(int money) {
+		this.money += money;
+	}
+    public void setKnowledge(int knowledge) {
+    	this.knowledge += knowledge;
     }
-    public void updateKnowledge(int knowledge) {
-    	this.knowledge = knowledge;
+    public void setHappiness(int happiness) {
+    	this.happiness += happiness;
     }
-    public void updateHappiness(int happiness) {
-    	this.happiness = happiness;
-    }
+	public int getMoney(){
+		return money;
+	}
+	public int getHappiness(){
+		return money;
+	}
+	public int getKnowledge(){
+		return knowledge;
+	}
     public void levelUp() {
     	level++;
     }
