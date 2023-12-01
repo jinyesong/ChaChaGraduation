@@ -6,6 +6,7 @@ public class Player {
 	private int knowledge;
 	private int happiness;
 	private int level;
+	TimeManager timeManager;
 	
 	public Player(String id) { //신규
 		this.id = id;
@@ -13,6 +14,7 @@ public class Player {
 		setKnowledge(0);
 		setHappiness(70);
 		setLevel(1);
+		this.timeManager = new TimeManager(this);
 	}
 	
 	public Player(String id, int money, int knowledge, int happiness, int level) { //기존
@@ -21,6 +23,7 @@ public class Player {
 		this.setKnowledge(knowledge);
 		this.setHappiness(happiness);
 		this.setLevel(level);
+		this.timeManager = new TimeManager(this);
 	}
 	
 	public int[] getPlayerInfo() {
@@ -42,6 +45,11 @@ public class Player {
     	else { //대학원 엔딩(HAPPY)
     		return "HAPPY";
     	}
+    }
+    
+    public int[] getTimeManagerInfo() {
+    	int[] info = {timeManager.getClickCount(), timeManager.getSeason()};
+    	return info;
     }
     
 	public String getId() {
