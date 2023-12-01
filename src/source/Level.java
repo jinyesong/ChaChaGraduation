@@ -13,23 +13,23 @@ class Level {
         this.scholarshipAwarded = false;
     }
 
-    public boolean levelUp(int knowledge, ChaChaGraduation chaChaGraduation) {
-        if (knowledge >= knowledgeThreshold) {
-            currentLevel++;
-            knowledgeThreshold += 30;
-
-            // Knowledge가 300 이상이면 장학금 지급
-            if (knowledge >= 300 && !scholarshipAwarded) {
-                JOptionPane.showMessageDialog(chaChaGraduation, "레벨 업 성공! & 장학금 지급!");
-                chaChaGraduation.addMoney(200);
-                scholarshipAwarded = true;
-            }
-
-            return true;
-        } else {
-            return false;
-        }
-    }
+//    public boolean levelUp(int knowledge, ChaChaGraduation chaChaGraduation) {
+//        if (knowledge >= knowledgeThreshold) {
+//            currentLevel++;
+//            knowledgeThreshold += 30;
+//
+//            // Knowledge가 300 이상이면 장학금 지급
+//            if (knowledge >= 300 && !scholarshipAwarded) {
+//                JOptionPane.showMessageDialog(chaChaGraduation, "레벨 업 성공! & 장학금 지급!");
+//                chaChaGraduation.addMoney(200);
+//                scholarshipAwarded = true;
+//            }
+//
+//            return true;
+//        } else {
+//            return false;
+//        }
+//    }
 
     public int getCurrentLevel() {
         return currentLevel;

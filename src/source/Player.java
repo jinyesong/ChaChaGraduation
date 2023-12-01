@@ -1,5 +1,7 @@
 package source;
 
+import javax.swing.JOptionPane;
+
 public class Player {
 	String id;
 	private int money;
@@ -33,6 +35,11 @@ public class Player {
 	
     public void levelUp() {
     	setLevel(getLevel() + 1);
+    	
+    	if (knowledge >= 300) { //학년별로 다르게 수정해야 함
+            //JOptionPane.showMessageDialog(player, "레벨 업 성공! & 장학금 지급!");
+            setMoney(getMoney()+200);
+        }
     }
     
     public String checkEndingConditions() {
