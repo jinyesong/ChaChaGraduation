@@ -53,6 +53,8 @@ public class UI extends JFrame {
 
 	class ChaCha extends JPanel {
 		JLabel gradeLabel;
+		ImageIcon logoutIcon, saveIcon;
+		JButton logoutButton, saveButton;
 
 		public ChaCha() {
 			setSize(550, 700);
