@@ -16,23 +16,18 @@ public class Player {
 		setKnowledge(0);
 		setHappiness(70);
 		setLevel(1);
-		this.timeManager = new TimeManager(this);
+		this.timeManager = new TimeManager(id);
 	}
 	
-	public Player(String id, int money, int knowledge, int happiness, int level) { //기존
+	public Player(String id, int money, int knowledge, int happiness, int level, TimeManager tm) { //기존
 		this.id = id;
 		this.setMoney(money);
 		this.setKnowledge(knowledge);
 		this.setHappiness(happiness);
 		this.setLevel(level);
-		this.timeManager = new TimeManager(this);
+		this.timeManager = tm;
 	}
-	
-	public int[] getPlayerInfo() {
-		int[] info = {getMoney(), getKnowledge(), getHappiness(), getLevel()};
-		return info;
-	}
-	
+
     public void levelUp() {
     	setLevel(getLevel() + 1);
     	
