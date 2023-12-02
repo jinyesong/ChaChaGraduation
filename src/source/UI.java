@@ -181,8 +181,10 @@ public class UI extends JFrame {
 			ImageIcon seasonIcon = getFrameIconForSeason(season);
 			Image seasonImage = seasonIcon.getImage();
 			g.drawImage(seasonImage, season_frameX, season_frameY, season_frameWidth, season_frameHeight, this);
-
+			
 			// 계절 창문 창틀 그리기
+			g.drawLine(season_frameX, season_frameY+season_frameHeight/2, season_frameX+season_frameWidth, season_frameY+season_frameHeight/2);
+			g.drawLine(season_frameX+season_frameWidth/2, season_frameY, season_frameX+season_frameWidth/2, season_frameY+season_frameHeight);
 			g.setColor(Color.BLACK);
 			g.drawRect(season_frameX, season_frameY, season_frameWidth, season_frameHeight);
 
@@ -196,15 +198,15 @@ public class UI extends JFrame {
 		private ImageIcon getFrameIconForSeason(int season) {
 			switch (season) {
 			case 1:
-				return new ImageIcon("path_to_spring_icon.png");
+				return new ImageIcon("src/img/spring.jpg");
 			case 2:
-				return new ImageIcon("path_to_summer_icon.png");
+				return new ImageIcon("src/img/summer.jpg");
 			case 3:
-				return new ImageIcon("path_to_autumn_icon.png");
+				return new ImageIcon("src/img/fall.jpg");
 			case 4:
-				return new ImageIcon("path_to_winter_icon.png");
+				return new ImageIcon("src/img/winter.jpg");
 			default:
-				return new ImageIcon("path_to_default_icon.png");
+				return new ImageIcon("src/img/spring.jpg");
 			}
 		}
 	}
