@@ -20,8 +20,8 @@ public class UI extends JFrame {
 	
 	Stat statPanel;
 	Below belowPanel;
-
-	Player player; 
+	
+	Player player;
 	int season; // 계절 1: Spring, 2: Summer, 3: Fall, 4: Winter
 //	int grade; // 학년
 //	int money; // 돈
@@ -49,22 +49,22 @@ public class UI extends JFrame {
 		statPanel.setBounds(0, 0, Main_WIDTH, 100); // ChaCha 패널과 크기를 맞춤
 		chaChaPanel.add(statPanel); // ChaCha 패널에 Stat 패널 추가
 
-		belowPanel = new Below(); 
+		belowPanel = new Below();
 		belowPanel.setBounds(0, 470, Main_WIDTH, Main_HEIGHT);
 		chaChaPanel.add(belowPanel);
 
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
-	
-	public void clickCheck() { 
-		//player의 click수 업데이트
+
+	public void clickCheck() {
+		// player의 click수 업데이트
 		player.timeManager.addClickCount();
-		//click수에 따른 이벤트 처리
-		
-		//player 정보 update되어 repaint
-		statPanel.repaint(); //액션 스탯 업데이트
-        belowPanel.repaint(); //클릭 스탯 업데이트
+		// click수에 따른 이벤트 처리
+
+		// player 정보 update되어 repaint
+		statPanel.repaint(); // 액션 스탯 업데이트
+		belowPanel.repaint(); // 클릭 스탯 업데이트
 	}
 
 	class ChaCha extends JPanel {
@@ -76,7 +76,7 @@ public class UI extends JFrame {
 			setSize(550, 700);
 			setLayout(null);
 
-			//학년 label 추가하기
+			// 학년 label 추가하기
 			gradeLabel = new JLabel(Integer.toString(player.getLevel()));
 			gradeLabel.setFont(new Font("Serif", Font.BOLD, 25));
 			gradeLabel.setHorizontalAlignment(JLabel.CENTER);
@@ -96,17 +96,17 @@ public class UI extends JFrame {
 
 				add(button);
 			}
-			
-			saveButton.addActionListener(e->{
+
+			saveButton.addActionListener(e -> {
 				FileIO fi = new FileIO();
 				fi.saveGame(player);
 				JOptionPane.showMessageDialog(null, "저장 완료!.");
 			});
-			logoutButton.addActionListener(e->{
+			logoutButton.addActionListener(e -> {
 				int result = 0;
 				result = JOptionPane.showConfirmDialog(null, "로그아웃 하시겠습니까?");
-				if(result == 0) { //로그아웃
-					dispose(); //현재 윈도우가 닫힘
+				if (result == 0) { // 로그아웃
+					dispose(); // 현재 윈도우가 닫힘
 					new LoginFrame();
 				}
 			});
@@ -198,15 +198,15 @@ public class UI extends JFrame {
 		private ImageIcon getFrameIconForSeason(int season) {
 			switch (season) {
 			case 1:
-				return new ImageIcon("path_to_spring_icon.png");
+				return new ImageIcon("src/img/spring.jpg");
 			case 2:
-				return new ImageIcon("path_to_summer_icon.png");
+				return new ImageIcon("src/img/summer.jpg");
 			case 3:
-				return new ImageIcon("path_to_autumn_icon.png");
+				return new ImageIcon("src/img/fall.jpg");
 			case 4:
-				return new ImageIcon("path_to_winter_icon.png");
+				return new ImageIcon("src/img/winter.jpg");
 			default:
-				return new ImageIcon("path_to_default_icon.png");
+				return new ImageIcon("src/img/spring.jpg");
 			}
 		}
 	}
