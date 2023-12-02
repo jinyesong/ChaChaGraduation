@@ -101,7 +101,7 @@ public class LoginFrame extends JFrame implements ActionListener{
 //			}
 			Player player;
 			if(fi.findPlayer(id)) { //존재하는 아이디
-				JOptionPane.showMessageDialog(null, "로그인 성공!.");
+				JOptionPane.showMessageDialog(null, "로그인 성공!");
 				player = fi.loadGame(id);
 				this.setVisible(false); //프레임 전환
 				new UI(player);

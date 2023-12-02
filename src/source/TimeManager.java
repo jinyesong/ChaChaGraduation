@@ -7,72 +7,61 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-import TimeManager.FestivalEventDialog;
+//import TimeManager.FestivalEventDialog;
 
 public class TimeManager {
+	private String PlayerId;
     private int season;
-    private boolean festivalEventOccurred = false; // 이벤트가 발생했는지 여부를 나타내는 변수
+    private int clickCount;
+    //private boolean festivalEventOccurred; // 이벤트가 발생했는지 여부를 나타내는 변수
 
-    public TimeManager() {
-        this.season = 1; // 1: Spring, 2: Summer, 3: Fall, 4: Winter
+    TimeManager(String id) { //신규
+    	this.PlayerId = id;
+        this.setSeason(1); // 1: Spring, 2: Summer, 3: Fall, 4: Winter
+        this.setClickCount(0);
+    }
+    
+    TimeManager(String id, int clickCount, int season) { //누적
+    	this.PlayerId = id;
+        this.setSeason(season);
+        this.setClickCount(clickCount);
     }
 
-    public void handleClick(int totalClicks, ChaChaGraduation chaChaGraduation) {
-        if (totalClicks % 10 == 0) {
-            changeSeason(chaChaGraduation);
-        }
-    }
 
     public int getSeason() {
         return season;
     }
+    public void setSeason(int season) {
+		this.season = season;
+	}
 
-    private void changeSeason(ChaChaGraduation chaChaGraduation) {
-        int previousSeason = season;
-        season = (season % 4) + 1; // 계절이 순환하도록 함
+	public int getClickCount() {
+		return clickCount;
+	}
 
-        if (previousSeason == 3 && season == 4) { // Fall to Winter transition
-            showFestivalEventDialog(chaChaGraduation);
-            festivalEventOccurred = true; // 이벤트 발생 여부 업데이트
+	public void setClickCount(int clickCount) {
+		this.clickCount = clickCount;
+	}
+	
+	public void addClickCount() {
+		clickCount++;
+		if (getClickCount() % 10 == 0) { //10이 될 때마다 계절 변경
+            changeSeason();
+        }
+	}
+    
+    private void changeSeason() {
+    	if (getSeason() == 3) { //가을 -> 겨울 계절 변경시 이벤트 발생
+            //showFestivalEvent();
+            //festivalEventOccurred = true; // 이벤트 발생 여부 업데이트
         } else {
-            festivalEventOccurred = false; // 축제 이벤트를 초기화하여 다음 계절에도 발생하도록 함
+            //festivalEventOccurred = false; // 축제 이벤트를 초기화하여 다음 계절에도 발생하도록 함
         }
+        setSeason((getSeason() % 4) + 1); // 계절이 순환하도록 함
     }
 
-    private void showFestivalEventDialog(ChaChaGraduation chaChaGraduation) {
-        FestivalEventDialog festivalEventDialog = new FestivalEventDialog(chaChaGraduation);
-        festivalEventDialog.setVisible(true);
-    }
-
-    private class FestivalEventDialog extends JDialog {
-        private ChaChaGraduation chaChaGraduation;
-
-        public FestivalEventDialog(ChaChaGraduation chaChaGraduation) {
-            super((JFrame) null, "백마 대동제", true);
-            this.chaChaGraduation = chaChaGraduation;
-
-            JLabel festivalLabel = new JLabel("축제 기간입니다!");
-            JButton enjoyFestivalButton = new JButton("축제 즐기러 가기");
-            JButton studyAtLibraryButton = new JButton("도서관에서 공부하기");
-
-            enjoyFestivalButton.addActionListener(e -> {
-                chaChaGraduation.enjoyFestival();
-                dispose(); // 창 닫기
-            });
-
-            studyAtLibraryButton.addActionListener(e -> {
-                chaChaGraduation.studyAtLibrary();
-                dispose(); // 창 닫기
-            });
-
-            setLayout(new GridLayout(3, 1));
-            add(festivalLabel);
-            add(enjoyFestivalButton);
-            add(studyAtLibraryButton);
-
-            setLocationRelativeTo(null);
-            setSize(300, 150);
-            setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        }
-    }
+//    private void showFestivalEvent() {
+//        Event festivalEvent = new Event();
+//        festivalEvent.festivalEvent(PlayerId);
+//    }
 }

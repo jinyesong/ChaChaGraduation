@@ -1,11 +1,14 @@
 package source;
 
+import javax.swing.JOptionPane;
+
 public class Player {
 	String id;
 	private int money;
 	private int knowledge;
 	private int happiness;
 	private int level;
+	TimeManager timeManager;
 	
 	public Player(String id) { //신규
 		this.id = id;
@@ -13,23 +16,25 @@ public class Player {
 		setKnowledge(0);
 		setHappiness(70);
 		setLevel(1);
+		this.timeManager = new TimeManager(id);
 	}
 	
-	public Player(String id, int money, int knowledge, int happiness, int level) { //기존
+	public Player(String id, int money, int knowledge, int happiness, int level, TimeManager tm) { //기존
 		this.id = id;
 		this.setMoney(money);
 		this.setKnowledge(knowledge);
 		this.setHappiness(happiness);
 		this.setLevel(level);
+		this.timeManager = tm;
 	}
-	
-	public int[] getPlayerInfo() {
-		int[] info = {getMoney(), getKnowledge(), getHappiness(), getLevel()};
-		return info;
-	}
-	
+
     public void levelUp() {
     	setLevel(getLevel() + 1);
+    	
+    	if (knowledge >= 300) { //학년별로 다르게 수정해야 함
+            //JOptionPane.showMessageDialog(player, "레벨 업 성공! & 장학금 지급!");
+            setMoney(getMoney()+200);
+        }
     }
     
     public String checkEndingConditions() {
@@ -42,6 +47,11 @@ public class Player {
     	else { //대학원 엔딩(HAPPY)
     		return "HAPPY";
     	}
+    }
+    
+    public int[] getTimeManagerInfo() {
+    	int[] info = {timeManager.getClickCount(), timeManager.getSeason()};
+    	return info;
     }
     
 	public String getId() {
