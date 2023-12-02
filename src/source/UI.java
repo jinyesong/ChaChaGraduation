@@ -67,6 +67,16 @@ public class UI extends JFrame {
         belowPanel.repaint(); //클릭 스탯 업데이트
 	}
 
+	public void clickCheck() {
+		// player의 click수 업데이트
+		player.timeManager.addClickCount();
+		// click수에 따른 이벤트 처리
+
+		// player 정보 update되어 repaint
+		statPanel.repaint(); // 액션 스탯 업데이트
+		belowPanel.repaint(); // 클릭 스탯 업데이트
+	}
+
 	class ChaCha extends JPanel {
 		JLabel gradeLabel;
 		ImageIcon logoutIcon, saveIcon;
@@ -83,17 +93,17 @@ public class UI extends JFrame {
 			gradeLabel.setVerticalAlignment(JLabel.CENTER);
 			add(gradeLabel);
 
-			//저장, 로그아웃 버튼 추가하기
+			// 저장, 로그아웃 버튼 추가하기
 			logoutIcon = new ImageIcon("src/img/logout_button.png");
 			logoutButton = new JButton(logoutIcon);
 			saveIcon = new ImageIcon("src/img/save_button.png");
 			saveButton = new JButton(saveIcon);
-			
+
 			for (JButton button : new JButton[] { saveButton, logoutButton }) {
 				button.setBorderPainted(false);
 				button.setFocusPainted(false);
 				button.setContentAreaFilled(false);
-				
+
 				add(button);
 			}
 			
@@ -181,14 +191,18 @@ public class UI extends JFrame {
 			ImageIcon seasonIcon = getFrameIconForSeason(season);
 			Image seasonImage = seasonIcon.getImage();
 			g.drawImage(seasonImage, season_frameX, season_frameY, season_frameWidth, season_frameHeight, this);
-
+			
 			// 계절 창문 창틀 그리기
+			g.drawLine(season_frameX, season_frameY+season_frameHeight/2, season_frameX+season_frameWidth, season_frameY+season_frameHeight/2);
+			g.drawLine(season_frameX+season_frameWidth/2, season_frameY, season_frameX+season_frameWidth/2, season_frameY+season_frameHeight);
 			g.setColor(Color.BLACK);
 			g.drawRect(season_frameX, season_frameY, season_frameWidth, season_frameHeight);
 
-			//저장, 로그아웃 버튼 위치시키기
-			saveButton.setBounds(getWidth()-saveIcon.getIconWidth()-5, centerY+35-saveIcon.getIconHeight(), saveIcon.getIconWidth(), saveIcon.getIconHeight());
-			logoutButton.setBounds(getWidth()-saveIcon.getIconWidth()-5, centerY+35, logoutIcon.getIconWidth(), logoutIcon.getIconHeight());
+			// 저장, 로그아웃 버튼 위치시키기
+			saveButton.setBounds(getWidth() - saveIcon.getIconWidth() - 5, centerY + 35 - saveIcon.getIconHeight(),
+					saveIcon.getIconWidth(), saveIcon.getIconHeight());
+			logoutButton.setBounds(getWidth() - saveIcon.getIconWidth() - 5, centerY + 35, logoutIcon.getIconWidth(),
+					logoutIcon.getIconHeight());
 		}
 
 		private ImageIcon getFrameIconForSeason(int season) {
@@ -231,7 +245,7 @@ public class UI extends JFrame {
 			// 이미지 아이콘 로드
 			ImageIcon moneyIcon = new ImageIcon("src/img/money.png");
 			ImageIcon knowledgeIcon = new ImageIcon("src/img/knowledge.png");
-			ImageIcon happinessIcon = new ImageIcon("src/img/Chappiness.png");
+			ImageIcon happinessIcon = new ImageIcon("src/img/happiness.png");
 
 			// 간격 설정
 			int gap = 10;
@@ -241,48 +255,42 @@ public class UI extends JFrame {
 			int rectangleWidth = 2 * iconWidth + 3;
 
 			// 돈 아이콘 그리기
-			moneyIcon.paintIcon(this, g, 0, y);
+			moneyIcon.paintIcon(this, g, gap, y);
 			gap += iconWidth;
 
 			// 돈 스탯 표시하는 직사각형 그리기
 			g.setColor(Color.white);
-			g.fillRoundRect(gap - 13, y + 6, gap + iconWidth - 10, iconHeight - 10, 10, 10);
+			g.fillRoundRect(gap, y + 6, gap + iconWidth - 10, iconHeight - 10, 10, 10);
 			g.setColor(Color.black);
-			g.drawRoundRect(gap - 13, y + 6, gap + iconWidth - 10, iconHeight - 10, 10, 10);
-
-			// 돈 스탯 표시하는 직사각형 그리기
-			g.setColor(Color.white);
-			g.fillRoundRect(gap - 13, y + 6, gap + iconWidth - 10, iconHeight - 10, 10, 10);
-			g.setColor(Color.black);
-			g.drawRoundRect(gap - 13, y + 6, gap + iconWidth - 10, iconHeight - 10, 10, 10);
+			g.drawRoundRect(gap, y + 6, gap + iconWidth - 10, iconHeight - 10, 10, 10);
 
 			// 돈 레이블 위치 설정
-			moneyLabel.setBounds(gap - 13, y + 6, gap + iconWidth - 10, iconHeight - 10);
+			moneyLabel.setBounds(gap, y + 6, gap + iconWidth - 10, iconHeight - 10);
 			moneyLabel.setText(Integer.toString(player.getMoney()));
 
 			gap += gap + iconWidth;
 
 			// 지식 아이콘 그리기
-			knowledgeIcon.paintIcon(this, g, gap - 16, y);
+			knowledgeIcon.paintIcon(this, g, gap-4, y);
 			gap += iconWidth;
 
 			// 지식 스탯 표시하는 직사각형 그리기
-			drawStatRectangle(g, player.getKnowledge(), gap - 13, y + 6, rectangleWidth, iconHeight - 10);
+			drawStatRectangle(g, player.getKnowledge(), gap, y + 6, rectangleWidth, iconHeight - 10);
 			gap += 120;
 
 			// 행복도 아이콘 그리기
-			happinessIcon.paintIcon(this, g, gap - 16, y);
+			happinessIcon.paintIcon(this, g, gap, y);
 			gap += iconWidth;
 
 			// 행복도 스탯 표시하는 직사각형 그리기
-			drawStatRectangle(g, player.getHappiness(), gap - 13, y + 6, rectangleWidth, iconHeight - 10);
+			drawStatRectangle(g, player.getHappiness(), gap, y + 6, rectangleWidth, iconHeight - 10);
 		}
 
 		// 스탯에 따라 직사각형 색깔 채우기
 		private void drawStatRectangle(Graphics g, int value, int x, int y, int width, int height) {
 			// 스탯의 백분율에 따라 채워지는 너비 계산
 			int filledWidth = width * value / 100;
-
+			
 			// 직사각형 그리기
 			g.setColor(new Color(0, 160, 186));
 			g.fillRoundRect(x, y, filledWidth, height, 10, 10);
@@ -293,19 +301,19 @@ public class UI extends JFrame {
 	}
 
 	class Below extends JPanel {
-		JLabel study_label, work_label, sleep_label, eat_label, play_label;
 		JButton studyButton, workButton, sleepButton, eatButton, playButton;
+		
+		// 차차 액션 아이콘 불러오기
+		ImageIcon studyIcon = new ImageIcon("src/img/study.png");
+		ImageIcon workIcon = new ImageIcon("src/img/work.png");
+		ImageIcon sleepIcon = new ImageIcon("src/img/sleep.png");
+		ImageIcon eatIcon = new ImageIcon("src/img/eat.png");
+		ImageIcon playIcon = new ImageIcon("src/img/play.png");
 
 		public Below() {
 			setLayout(null);
 			
-			// 차차 액션 아이콘 및 버튼 불러오기
-			ImageIcon studyIcon = new ImageIcon("src/img/study.png");
-			ImageIcon workIcon = new ImageIcon("src/img/work.png");
-			ImageIcon sleepIcon = new ImageIcon("src/img/sleep.png");
-			ImageIcon eatIcon = new ImageIcon("src/img/eat.png");
-			ImageIcon playIcon = new ImageIcon("src/img/play.png");
-
+			//차차 버튼 불러오기
 			studyButton = new JButton(new ImageIcon("src/img/study_button.png"));
 			workButton = new JButton(new ImageIcon("src/img/work_button.png"));
 			sleepButton = new JButton(new ImageIcon("src/img/sleep_button.png"));
@@ -314,79 +322,30 @@ public class UI extends JFrame {
 
 			// 각 버튼에 액션 이벤트 리스너 추가
 			studyButton.addActionListener(e -> {
-                player.setKnowledge(player.getKnowledge()+10);
-                player.setHappiness(player.getHappiness()-5);
-                clickCheck();
-            });
+				player.setKnowledge(player.getKnowledge() + 10);
+				player.setHappiness(player.getHappiness() - 5);
+				clickCheck();
+			});
 			workButton.addActionListener(e -> {
-                player.setMoney(player.getMoney()+20);
-                clickCheck();
-            });
+				player.setMoney(player.getMoney() + 20);
+				clickCheck();
+			});
 			sleepButton.addActionListener(e -> {
-                player.setHappiness(player.getHappiness()+15);
-                clickCheck();
-            });
+				player.setHappiness(player.getHappiness() + 15);
+				clickCheck();
+			});
 			eatButton.addActionListener(e -> {
-                player.setHappiness(player.getHappiness()+20);
-                player.setMoney(player.getMoney()-10);
-                clickCheck();
-            });
+				player.setHappiness(player.getHappiness() + 20);
+				player.setMoney(player.getMoney() - 10);
+				clickCheck();
+			});
 
 			playButton.addActionListener(e -> {
-				player.setKnowledge(player.getKnowledge()-10);
-				player.setHappiness(player.getHappiness()+20);
-				player.setMoney(player.getMoney()-15);
-                clickCheck();
-            });
-
-			study_label = new JLabel();
-			work_label = new JLabel();
-			sleep_label = new JLabel();
-			eat_label = new JLabel();
-			play_label = new JLabel();
-
-			// 이미지 레이블 등록하기
-			study_label.setIcon(studyIcon);
-			work_label.setIcon(workIcon);
-			sleep_label.setIcon(sleepIcon);
-			eat_label.setIcon(eatIcon);
-			play_label.setIcon(playIcon);
-
-			// 각 버튼 및 차차 액션 아이콘 위치 설정
-			int icon_gap = 7;
-			int button_gap = 23;
-			int y = 10;
-			int iconWidth = studyIcon.getIconWidth();
-			int iconHeight = studyIcon.getIconHeight();
-			int buttonWidth = studyButton.getIcon().getIconWidth();
-			int buttonHeight = studyButton.getIcon().getIconHeight();
-
-			study_label.setBounds(icon_gap, y, iconWidth, iconHeight);
-			studyButton.setBounds(button_gap, y + iconHeight, buttonWidth, buttonHeight);
-
-			icon_gap += iconWidth + 10;
-			button_gap += buttonWidth + 13;
-
-			work_label.setBounds(icon_gap - 30, y + 5, iconWidth, iconHeight);
-			workButton.setBounds(button_gap, y + iconHeight, buttonWidth, buttonHeight);
-
-			icon_gap += iconWidth + 5;
-			button_gap += buttonWidth + 13;
-
-			sleep_label.setBounds(icon_gap - 45, y - 5, iconWidth, iconHeight);
-			sleepButton.setBounds(button_gap, y + iconHeight, buttonWidth, buttonHeight);
-
-			icon_gap += iconWidth + 5;
-			button_gap += buttonWidth + 13;
-
-			eat_label.setBounds(icon_gap - 80, y, iconWidth, iconHeight);
-			eatButton.setBounds(button_gap, y + iconHeight, buttonWidth, buttonHeight);
-
-			icon_gap += iconWidth + 5;
-			button_gap += buttonWidth + 13;
-
-			play_label.setBounds(icon_gap - 90, y, iconWidth, iconHeight);
-			playButton.setBounds(button_gap, y + iconHeight, buttonWidth, buttonHeight);
+				player.setKnowledge(player.getKnowledge() - 10);
+				player.setHappiness(player.getHappiness() + 20);
+				player.setMoney(player.getMoney() - 15);
+				clickCheck();
+			});
 
 			for (JButton button : new JButton[] { studyButton, workButton, sleepButton, eatButton, playButton }) {
 				button.setBorderPainted(false);
@@ -395,17 +354,48 @@ public class UI extends JFrame {
 				add(button);
 			}
 
-			add(study_label);
-			add(work_label);
-			add(sleep_label);
-			add(eat_label);
-			add(play_label);
-
-			setOpaque(true); // 패널 배경을 투명하게 설정
+			setOpaque(false); // 패널 배경을 투명하게 설정
 		}
 
 		@Override
 		protected void paintComponent(Graphics g) {
+
+			// 각 버튼 및 차차 액션 아이콘 위치 설정
+			int icon_gap = 25;
+			int button_gap = 23;
+			int y = 10;
+			int iconWidth = studyIcon.getIconWidth();
+			int iconHeight = studyIcon.getIconHeight();
+			int buttonWidth = studyButton.getIcon().getIconWidth();
+			int buttonHeight = studyButton.getIcon().getIconHeight()+70;
+
+			studyIcon.paintIcon(this, g ,icon_gap, y+35);
+			studyButton.setBounds(button_gap, y + iconHeight, buttonWidth, buttonHeight);
+
+			icon_gap += iconWidth;
+			button_gap += buttonWidth + 13;
+
+			workIcon.paintIcon(this, g, icon_gap, y+35);
+			workButton.setBounds(button_gap, y + iconHeight, buttonWidth, buttonHeight);
+
+			icon_gap += iconWidth + 28;
+			button_gap += buttonWidth + 13;
+
+			sleepIcon.paintIcon(this, g, icon_gap, y+13);
+			sleepButton.setBounds(button_gap, y + iconHeight, buttonWidth, buttonHeight);
+
+			icon_gap += iconWidth + 13;
+			button_gap += buttonWidth + 13;
+
+			eatIcon.paintIcon(this, g, icon_gap, y+12);
+			eatButton.setBounds(button_gap, y + iconHeight, buttonWidth, buttonHeight);
+
+			icon_gap += iconWidth + 24;
+			button_gap += buttonWidth + 13;
+
+			playIcon.paintIcon(this, g, icon_gap, y+25);
+			playButton.setBounds(button_gap, y + iconHeight, buttonWidth, buttonHeight);
+
 			drawClickRectangle(g, player.timeManager.getClickCount(), 0, getHeight() - 30, getWidth(), getHeight());
 		}
 
