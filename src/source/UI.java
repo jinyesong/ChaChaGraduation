@@ -67,16 +67,6 @@ public class UI extends JFrame {
         belowPanel.repaint(); //클릭 스탯 업데이트
 	}
 
-	public void clickCheck() {
-		// player의 click수 업데이트
-		player.timeManager.addClickCount();
-		// click수에 따른 이벤트 처리
-
-		// player 정보 update되어 repaint
-		statPanel.repaint(); // 액션 스탯 업데이트
-		belowPanel.repaint(); // 클릭 스탯 업데이트
-	}
-
 	class ChaCha extends JPanel {
 		JLabel gradeLabel;
 		ImageIcon logoutIcon, saveIcon;
