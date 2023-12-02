@@ -11,6 +11,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class UI extends JFrame {
@@ -82,6 +83,20 @@ public class UI extends JFrame {
 				
 				add(button);
 			}
+			
+			saveButton.addActionListener(e->{
+				FileIO fi = new FileIO();
+				fi.saveGame(player);
+				JOptionPane.showMessageDialog(null, "저장 완료!.");
+			});
+			logoutButton.addActionListener(e->{
+				int result = 0;
+				result = JOptionPane.showConfirmDialog(null, "로그아웃 하시겠습니까?");
+				if(result == 0) { //로그아웃
+					dispose(); //현재 윈도우가 닫힘
+					new LoginFrame();
+				}
+			});
 		}
 
 		@Override
