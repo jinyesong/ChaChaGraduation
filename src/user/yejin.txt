@@ -1,1 +1,6 @@
-{"money":0,"happiness":70,"level":1,"knowledge":0}
+0
+80
+1
+0
+5
+1
