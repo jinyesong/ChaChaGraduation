@@ -52,16 +52,24 @@ public class TimeManager {
     
     private void changeSeason() {
     	if (getSeason() == 3) { //가을 -> 겨울 계절 변경시 이벤트 발생
-            //showFestivalEvent();
+            showFestivalEvent(PlayerId);
             //festivalEventOccurred = true; // 이벤트 발생 여부 업데이트
         } else {
             //festivalEventOccurred = false; // 축제 이벤트를 초기화하여 다음 계절에도 발생하도록 함
         }
         setSeason((getSeason() % 4) + 1); // 계절이 순환하도록 함
     }
+    
+    private void showFestivalEvent(String playerId) {
+        // PlayerId를 사용하여 Player 객체 생성
+        Player player = new Player(playerId);
+        
+        Event festivalEvent = new Event();
+        festivalEvent.festivalEvent(player);
 
 //    private void showFestivalEvent() {
 //        Event festivalEvent = new Event();
 //        festivalEvent.festivalEvent(PlayerId);
 //    }
+    }
 }

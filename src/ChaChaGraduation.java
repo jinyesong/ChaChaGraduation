@@ -127,22 +127,31 @@ public class ChaChaGraduation extends JFrame {
         if (happiness < 0) {
             happiness = 0; // 행복도가 30 이하이면 자퇴?
         }
+        if (happiness > 100) {
+            happiness = 100;
+        }
     }
 
     private void work() {
-        money += 20;
+        money += 10;
+        happiness -=5;
+    
+    if (happiness > 100) {
+        happiness = 100;
     }
+   }
 
     private void sleep() {
-        happiness += 10;
+        happiness += 5;
+        knowledge -= 1;
         if (happiness > 100) {
             happiness = 100;
         }
     }
 
     private void eat() {
-        money -= 10;
-        happiness += 20;
+        money -= 5;
+        happiness += 5;
         if (money < 0) {
             money = 0;
         }
@@ -152,8 +161,8 @@ public class ChaChaGraduation extends JFrame {
     }
 
     private void play() {
-        money -= 15;
-        happiness += 25;
+        money -= 10;
+        happiness += 15;
         knowledge -= 10;
         if (money < 0) {
             money = 0;
@@ -199,7 +208,7 @@ public class ChaChaGraduation extends JFrame {
     }
 
     public void enjoyFestival() {
-        happiness += 40;
+        happiness += 20;
         knowledge -= 50;
 
         if (happiness > 100) {
@@ -209,7 +218,7 @@ public class ChaChaGraduation extends JFrame {
 
     public void studyAtLibrary() {
         happiness -= 50;
-        knowledge += 40;
+        knowledge += 20;
 
         if (happiness > 100) {
             happiness = 100;
@@ -233,8 +242,8 @@ class Level {
             currentLevel++;
             knowledgeThreshold += 30;
 
-            // Knowledge가 300 이상이면 장학금 지급
-            if (knowledge >= 300 && !scholarshipAwarded) {
+            // Knowledge가 95 이상이면 장학금 지급
+            if (knowledge >= 95 && !scholarshipAwarded) {
                 JOptionPane.showMessageDialog(chaChaGraduation, "레벨 업 성공! & 장학금 지급!");
                 chaChaGraduation.addMoney(200);
                 scholarshipAwarded = true;
