@@ -89,7 +89,7 @@ public class UI extends JFrame {
 			if(player.timeManager.getClickCount() < 160) {
 				if (player.getHappiness() < 30) {
 					this.setVisible(false);
-					new DropOutEnding();
+					new FailEnding();
 				}
 			}
 		}
