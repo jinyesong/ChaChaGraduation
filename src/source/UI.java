@@ -82,14 +82,14 @@ public class UI extends JFrame {
 				new GraduationEnding();
 			} else if (player.getMoney() < 500) {
 				this.setVisible(false);
-				new DropOutEnding();
+				new FailEnding();
 			}
 			
-			// 행복도 30이하면 졸업 실패 엔딩... 구현 안됨 원인 파악 중
+			// 행복도 30이하면 자퇴 엔딩... 구현 안됨 원인 파악 중
 			if(player.timeManager.getClickCount() < 160) {
 				if (player.getHappiness() < 30) {
 					this.setVisible(false);
-					new FailEnding();
+					new DropOutEnding();
 				}
 			}
 		}
