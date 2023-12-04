@@ -5,11 +5,11 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
-public class GraduationEnding extends JFrame {
+public class FailEnding extends JFrame {
 	
 	private Image background = new ImageIcon("src/img/졸업실패엔딩.png").getImage();
 	
-	public GraduationEnding() {
+	public FailEnding() {
 		setTitle("졸업실패 엔딩");
 		setSize(564,737);
 		setLayout(null);
