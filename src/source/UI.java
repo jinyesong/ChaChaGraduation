@@ -317,8 +317,10 @@ public class UI extends JFrame {
 				clickCheck();
 			});
 			workButton.addActionListener(e -> {
-				player.setMoney(player.getMoney() + 20);
-				clickCheck();
+				// player.setMoney(player.getMoney() + 20);
+				// clickCheck();
+
+				new Parttime_avoidPoop();
 			});
 			sleepButton.addActionListener(e -> {
 				player.setHappiness(player.getHappiness() + 15);
