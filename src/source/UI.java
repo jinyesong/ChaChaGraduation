@@ -6,6 +6,8 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Point;
+import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -13,17 +15,19 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 
 public class UI extends JFrame {
 	final int Main_WIDTH = 550;
 	final int Main_HEIGHT = 700;
 	
+	ChaCha ChachaPanel;
 	Stat statPanel;
 	Below belowPanel;
 	
 	Player player;
 	int season; // 계절 1: Spring, 2: Summer, 3: Fall, 4: Winter
-//	int grade; // 학년
+	int grade; // 학년
 //	int money; // 돈
 //	int clicks; // 클릭수(계절 당 클릭수를 경험치처럼 표현하기 위함)
 //	int knowledge; // 지식 스탯
@@ -31,11 +35,15 @@ public class UI extends JFrame {
 
 	public UI(Player player) {
 		setSize(Main_WIDTH+14, Main_HEIGHT+37);
+		setTitle("차차 키우기");
 		setLayout(null);
+		
+		//프레임의 위치를 화면 중앙으로 설정**없어도 됨**
+		setLocationRelativeTo(null);
 
 		this.player = player;
 		season = player.timeManager.getSeason(); // 초기 계절 = 봄
-//		grade = player.getLevel(); // 초기 학년 = 1학년
+		grade = player.getLevel(); // 초기 학년 = 1학년
 //		money = player.getMoney(); // 초기 돈 액수 = 0원
 //		clicks = 0; // 초기 클릭수 = 0
 //		knowledge = player.getKnowledge(); // 초기 지식 스탯
@@ -55,6 +63,8 @@ public class UI extends JFrame {
 
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		
+		
 	}
 
 	public void clickCheck() {
@@ -62,6 +72,28 @@ public class UI extends JFrame {
 		player.timeManager.addClickCount();
 		// click수에 따른 이벤트 처리
 
+		//돈 수치 별 엔딩 화면
+		if(player.timeManager.getClickCount() == 160) {
+			if (player.getMoney() >= 800) {
+				this.setVisible(false);
+				new GraduateSchoolEnding();
+			} else if (player.getMoney() < 800 && player.getMoney() >= 500) {
+				this.setVisible(false);
+				new GraduationEnding();
+			} else if (player.getMoney() < 500) {
+				this.setVisible(false);
+				new DropOutEnding();
+			}
+			
+			// 행복도 30이하면 졸업 실패 엔딩... 구현 안됨 원인 파악 중
+			if(player.timeManager.getClickCount() < 160) {
+				if (player.getHappiness() < 30) {
+					this.setVisible(false);
+					new DropOutEnding();
+				}
+			}
+		}
+		
 		// player 정보 update되어 repaint
 		statPanel.repaint(); // 액션 스탯 업데이트
 		belowPanel.repaint(); // 클릭 스탯 업데이트
@@ -144,24 +176,18 @@ public class UI extends JFrame {
 			int y = centerY - imageHeight / 2;
 			g.drawImage(chacha, x, y, this);
 
-			// 학년 창문 네모 그리기.
-			int grade_windowWidth = getWidth() * 2 / 10;
-			int grade_windowHeight = getHeight() * 2 / 10;
-			int grade_windowX = getWidth() - 150;
-			int grade_windowY = getHeight() - 550;
-
-			g.setColor(Color.BLACK);
-			g.drawRect(grade_windowX, grade_windowY, grade_windowWidth, grade_windowHeight);
-
-			// 학년 창문 창틀 그리기
-			int grade_frameWidth = grade_windowWidth * 9 / 10; // 창 너비의 9/10
-			int grade_frameHeight = grade_windowHeight * 9 / 10; // 창 높이의 9/10
-			int grade_frameX = grade_windowX + (grade_windowWidth - grade_frameWidth) / 2;
-			int grade_frameY = grade_windowY + (grade_windowHeight - grade_frameHeight) / 2;
-			g.drawRect(grade_frameX, grade_frameY, grade_frameWidth, grade_frameHeight);
-
-			// 학년 레이블 그리기
-			gradeLabel.setBounds(grade_frameX, grade_frameY, grade_frameWidth, grade_frameHeight);
+			// 학년 표시 달력 그리기
+			ImageIcon gradeIcon = getFrameIconForGrade(grade);
+			Image gradeImage = gradeIcon.getImage();
+			
+			int grade_windowX = getWidth() * 7/10;
+			int grade_windowY = getHeight() * 14/100;
+			int grade_windowWidth = getHeight() * 20/100;
+			int grade_windowHeight = getHeight() * 20/100;
+			g.drawImage(gradeImage, grade_windowX, grade_windowY, grade_windowWidth, grade_windowHeight, this);
+			
+			
+			
 
 			// 계절 창문 네모 그리기.
 			int season_windowWidth = getHeight() * 25 / 100;
@@ -209,6 +235,21 @@ public class UI extends JFrame {
 				return new ImageIcon("src/img/spring.jpg");
 			}
 		}
+		
+		private ImageIcon getFrameIconForGrade(int grade) {
+			switch (grade) {
+			case 1:
+				return new ImageIcon("src/img/grade1.png");
+			case 2:
+				return new ImageIcon("src/img/grade2.png");
+			case 3:
+				return new ImageIcon("src/img/grade3.png");
+			case 4:
+				return new ImageIcon("src/img/grade4.png");
+			default:
+				return new ImageIcon("src/img/grade1.png");
+			}
+		}
 	}
 
 	class Stat extends JPanel {
@@ -235,7 +276,9 @@ public class UI extends JFrame {
 			// 이미지 아이콘 로드
 			ImageIcon moneyIcon = new ImageIcon("src/img/money.png");
 			ImageIcon knowledgeIcon = new ImageIcon("src/img/knowledge.png");
-			ImageIcon happinessIcon = new ImageIcon("src/img/happiness.png");
+			ImageIcon happinessHighIcon = new ImageIcon("src/img/happiness_high.png");
+			ImageIcon happinessMiddleIcon = new ImageIcon("src/img/happiness_middle.png");
+			ImageIcon happinessLowIcon = new ImageIcon("src/img/happiness_low.png");
 
 			// 간격 설정
 			int gap = 10;
@@ -269,7 +312,16 @@ public class UI extends JFrame {
 			gap += 120;
 
 			// 행복도 아이콘 그리기
-			happinessIcon.paintIcon(this, g, gap, y);
+			int happinessStat = player.getHappiness();
+			if (happinessStat >= 70) {
+				happinessHighIcon.paintIcon(this, g, gap, y);
+	        } else if (happinessStat >= 30 && happinessStat < 70) {
+	        	happinessMiddleIcon.paintIcon(this, g, gap, y);
+	        } else if (happinessStat < 30) {
+	        	happinessLowIcon.paintIcon(this, g, gap, y);
+	        } 
+			
+			
 			gap += iconWidth;
 
 			// 행복도 스탯 표시하는 직사각형 그리기
@@ -309,31 +361,43 @@ public class UI extends JFrame {
 			sleepButton = new JButton(new ImageIcon("src/img/sleep_button.png"));
 			eatButton = new JButton(new ImageIcon("src/img/eat_button.png"));
 			playButton = new JButton(new ImageIcon("src/img/play_button.png"));
+			
+			//액션 화면 프레임
+			StudyBackground studyBackground = new StudyBackground();
+			WorkBackground workBackground = new WorkBackground();
+			SleepBackground sleepBackground = new SleepBackground();
+			EatBackground eatBackground = new EatBackground();
+			PlayBackground playBackground = new PlayBackground(); 
 
 			// 각 버튼에 액션 이벤트 리스너 추가
 			studyButton.addActionListener(e -> {
 				player.setKnowledge(player.getKnowledge() + 10);
 				player.setHappiness(player.getHappiness() - 5);
+				showBackgoundFrame(studyBackground);
 				clickCheck();
 			});
 			workButton.addActionListener(e -> {
 				player.setMoney(player.getMoney() + 20);
+				showBackgoundFrame(workBackground);
 				clickCheck();
 			});
 			sleepButton.addActionListener(e -> {
 				player.setHappiness(player.getHappiness() + 15);
+				showBackgoundFrame(sleepBackground);
 				clickCheck();
 			});
 			eatButton.addActionListener(e -> {
 				player.setHappiness(player.getHappiness() + 20);
-				player.setMoney(player.getMoney() - 10);
+				player.setMoney(player.getMoney() - 10);			
+				showBackgoundFrame(eatBackground);
 				clickCheck();
 			});
 
 			playButton.addActionListener(e -> {
 				player.setKnowledge(player.getKnowledge() - 10);
 				player.setHappiness(player.getHappiness() + 20);
-				player.setMoney(player.getMoney() - 15);
+				player.setMoney(player.getMoney() - 15);			
+				showBackgoundFrame(playBackground);
 				clickCheck();
 			});
 
@@ -398,6 +462,15 @@ public class UI extends JFrame {
 			g.setColor(Color.orange);
 			g.fillRect(0, 220, filledWidth, height);
 
+		}
+		
+		//해당 액션 버튼의 프레임을 불러오는 메서드
+		private void showBackgoundFrame(JFrame background) {
+			background.setVisible(true);
+			background.setLocationRelativeTo(null);
+			Timer timer = new Timer(2000, e -> background.dispose());
+			timer.setRepeats(false);
+			timer.start();
 		}
 	}
 }
