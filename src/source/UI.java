@@ -21,13 +21,11 @@ public class UI extends JFrame {
 	final int Main_WIDTH = 550;
 	final int Main_HEIGHT = 700;
 
-	ChaCha ChachaPanel;
+	ChaCha chachaPanel;
 	Stat statPanel;
 	Below belowPanel;
 
 	Player player;
-	int season; // 계절 1: Spring, 2: Summer, 3: Fall, 4: Winter
-	int grade; // 학년
 //	int money; // 돈
 //	int clicks; // 클릭수(계절 당 클릭수를 경험치처럼 표현하기 위함)
 //	int knowledge; // 지식 스탯
@@ -42,24 +40,22 @@ public class UI extends JFrame {
 		setLocationRelativeTo(null);
 
 		this.player = player;
-		season = player.timeManager.getSeason(); // 초기 계절 = 봄
-		grade = player.getLevel(); // 초기 학년 = 1학년
 //		money = player.getMoney(); // 초기 돈 액수 = 0원
 //		clicks = 0; // 초기 클릭수 = 0
 //		knowledge = player.getKnowledge(); // 초기 지식 스탯
 //		happiness = player.getHappiness(); // 초기 행복 스탯
 
-		ChaCha chaChaPanel = new ChaCha();
-		chaChaPanel.setBounds(0, 0, Main_WIDTH, Main_HEIGHT);
-		add(chaChaPanel);
+		chachaPanel = new ChaCha();
+		chachaPanel.setBounds(0, 0, Main_WIDTH, Main_HEIGHT);
+		add(chachaPanel);
 
 		statPanel = new Stat();
 		statPanel.setBounds(0, 0, Main_WIDTH, 100); // ChaCha 패널과 크기를 맞춤
-		chaChaPanel.add(statPanel); // ChaCha 패널에 Stat 패널 추가
+		chachaPanel.add(statPanel); // ChaCha 패널에 Stat 패널 추가
 
 		belowPanel = new Below();
 		belowPanel.setBounds(0, 470, Main_WIDTH, Main_HEIGHT);
-		chaChaPanel.add(belowPanel);
+		chachaPanel.add(belowPanel);
 
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -93,6 +89,7 @@ public class UI extends JFrame {
 		// player 정보 update되어 repaint
 		statPanel.repaint(); // 액션 스탯 업데이트
 		belowPanel.repaint(); // 클릭 스탯 업데이트
+		chachaPanel.repaint(); //계절 및 레벨 업데이트
 	}
 
 	class ChaCha extends JPanel {
@@ -173,7 +170,7 @@ public class UI extends JFrame {
 			g.drawImage(chacha, x, y, this);
 
 			// 학년 표시 달력 그리기
-			ImageIcon gradeIcon = getFrameIconForGrade(grade);
+			ImageIcon gradeIcon = getFrameIconForGrade(player.getLevel());
 			Image gradeImage = gradeIcon.getImage();
 
 			int grade_windowX = getWidth() * 7 / 10;
@@ -197,7 +194,7 @@ public class UI extends JFrame {
 			int season_frameX = season_windowX + (season_windowWidth - season_frameWidth) / 2;
 			int season_frameY = season_windowY + (season_windowHeight - season_frameHeight) / 2;
 
-			ImageIcon seasonIcon = getFrameIconForSeason(season);
+			ImageIcon seasonIcon = getFrameIconForSeason(player.timeManager.getSeason());
 			Image seasonImage = seasonIcon.getImage();
 			g.drawImage(seasonImage, season_frameX, season_frameY, season_frameWidth, season_frameHeight, this);
 
