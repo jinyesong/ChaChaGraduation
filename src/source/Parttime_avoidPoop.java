@@ -2,12 +2,14 @@ package source;
 
 import java.awt.*;
 import javax.swing.*;
-import javax.swing.ImageIcon;
+
 import java.awt.event.*;
 import java.io.*;
 import java.util.ArrayList;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
+import java.awt.Graphics;
+import java.awt.Image;
 
 
 import javax.swing.*;
@@ -15,14 +17,16 @@ import java.util.ArrayList;
 
 public class Parttime_avoidPoop extends JFrame {
     public static ArrayList<DroppingObject> poopList = new ArrayList<>();
+    Player player;
     Avoider chacha = new Avoider();
     OnPlayingScreen playingScreen = new OnPlayingScreen(chacha);
     ProducingObject producingPoopThread = new ProducingObject(playingScreen, chacha);
-    DroppingThread droppingThread = new DroppingThread(playingScreen, chacha);
+    DroppingThread droppingThread = new DroppingThread(playingScreen, chacha, player);
 
-    Parttime_avoidPoop() {
+    Parttime_avoidPoop(Player player) {
+        this.player = player;
         setTitle("똥 피하기 게임");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         StartScreen startScreen = new StartScreen(this, playingScreen, producingPoopThread, droppingThread);
         add(startScreen);
         setSize(700, 800);
@@ -30,12 +34,15 @@ public class Parttime_avoidPoop extends JFrame {
         setVisible(true);
     }
 
-    public static void main(String[] args) {
-        new Parttime_avoidPoop();
-    }
+    // public static void main(String[] args) {
+    //     new Parttime_avoidPoop();
+    // }
 }
 
 class StartScreen extends JPanel {
+
+
+        private Image background = new ImageIcon("src/img/avoidPoop_startScreen.png").getImage();
 
 		OnPlayingScreen playingScreen;
 		Parttime_avoidPoop mainScreen;
@@ -43,18 +50,18 @@ class StartScreen extends JPanel {
 		DroppingThread droppingThread;
 		static long start;
 		
-		StartScreen(Parttime_avoidPoop mainScreen,OnPlayingScreen playingScreen, ProducingObject producingPoopThread , DroppingThread droppingThread){
+		 StartScreen(Parttime_avoidPoop mainScreen,OnPlayingScreen playingScreen, ProducingObject producingPoopThread , DroppingThread droppingThread){
 			this.mainScreen = mainScreen;
 			this.playingScreen = playingScreen;
 			this.producingPoopThread = producingPoopThread;
 			this.droppingThread = droppingThread;
 			
-			JButton avoidPoopBtn = new JButton("똥피하기"); //똥피하기 버튼
-            JButton vocaQuizBtn = new JButton("단어 퀴즈"); //단어 퀴즈 버튼
-            JButton BallGameBtn = new JButton("공 누르기 게임"); //공 누르기 게임 버튼
+            setLayout(null);
+            
+			JButton avoidPoopBtn = new JButton(); //똥피하기 버튼
 			
 			avoidPoopBtn.addMouseListener(new MouseAdapter() {
-				public void mousePressed(MouseEvent e) {
+				public synchronized void mousePressed(MouseEvent e) {
 					// 메인에 있는 panel을 지우고 현재 panel을 삽입한다.
 					start = System.currentTimeMillis();
 					mainScreen.add(playingScreen);
@@ -65,10 +72,17 @@ class StartScreen extends JPanel {
 				
 			}); // 시작 버튼 클릭
 			
-			add(avoidPoopBtn);
-            add(vocaQuizBtn);
-            add(BallGameBtn);
+            avoidPoopBtn.setBounds(260, 670, 160, 70);
+
+            avoidPoopBtn.setBorderPainted(false);
+            avoidPoopBtn.setFocusPainted(false);
+            avoidPoopBtn.setContentAreaFilled(false);
+            add(avoidPoopBtn);
+
 		}
+        public void paintComponent(Graphics g) {
+		        g.drawImage(background, 0, 0, 680, 780, null);
+        }
 }
 
 
@@ -145,14 +159,16 @@ class OnPlayingScreen extends JPanel { //플레이 화면
 class DroppingThread extends Thread {
 
 	OnPlayingScreen playingScreen;
+    Player player;
 	Avoider chacha;
 	DroppingObject poopSample = new DroppingObject();
 	boolean vForCrushingCount;
     volatile boolean terminationFlag = true;
 	
-	DroppingThread(OnPlayingScreen playingScreen, Avoider chacha){
+	DroppingThread(OnPlayingScreen playingScreen, Avoider chacha, Player player){
 		this.playingScreen = playingScreen;
 		this.chacha = chacha;
+        this.player = player;
 	}
 	
 	
@@ -191,11 +207,9 @@ class DroppingThread extends Thread {
 			
 		if(chacha.life ==0) {
 			long end = System.currentTimeMillis();
-			    JOptionPane aa=new JOptionPane();
-			    float aliveTime = (end - StartScreen.start)/1000.0f; 
-			    aa.showMessageDialog(null, "탈락입니다. 버틴 초: "+ aliveTime);
+            int aliveTime = (int)((end - StartScreen.start)/1000.0f); 
+	        JOptionPane.showMessageDialog(null, ""+ aliveTime+" 초 동안 버텼습니다.");
 		}
-		
 	}       
 
 	public void run(){
@@ -235,6 +249,8 @@ class DroppingThread extends Thread {
 	
 	
     public void stopThread() {
+        Parttime_avoidPoop.poopList.clear();
+        player.setKnowledge(0);
         terminationFlag = false;
     }
 	
@@ -285,6 +301,7 @@ class ProducingObject extends Thread{
 	
     public void stopThread() {
         terminationFlag = false;
+        this.stop();
+
     }
-	
 }

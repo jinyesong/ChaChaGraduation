@@ -320,7 +320,7 @@ public class UI extends JFrame {
 				// player.setMoney(player.getMoney() + 20);
 				// clickCheck();
 
-				new Parttime_avoidPoop();
+				new Parttime_avoidPoop(player);
 			});
 			sleepButton.addActionListener(e -> {
 				player.setHappiness(player.getHappiness() + 15);
