@@ -21,7 +21,7 @@ public class FileIO {
 	public void saveGame(Player player) {
 		int[] timeInfo = player.getTimeManagerInfo();
 		
-        try (FileWriter file = new FileWriter( player.getId() + ".txt")) {
+        try (FileWriter file = new FileWriter( "src/user/" + player.getId() + ".txt")) {
         	file.write(player.getMoney()+"\n");
         	file.write(player.getKnowledge()+"\n");
         	file.write(player.getHappiness()+"\n");
