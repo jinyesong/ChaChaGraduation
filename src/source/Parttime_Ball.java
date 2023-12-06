@@ -1,5 +1,6 @@
 package source;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -23,7 +24,11 @@ public class Parttime_Ball extends JFrame implements ActionListener{
 	private static final int PERIOD = 10;
 	
 	JPanel readyPanel, ballPanel;
+	JLabel scoreLabel;
 	int score;
+	
+	private static final int GAME_TIME_SECONDS = 20;
+    private Timer gameTimer;
 	
 	Parttime_Ball(Player player){
 		this.player = player;
@@ -43,6 +48,12 @@ public class Parttime_Ball extends JFrame implements ActionListener{
 		Timer timer = new Timer(PERIOD, this);
 		timer.start();
 		
+		gameTimer = new Timer(GAME_TIME_SECONDS * 1000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                endGame();
+            }
+		});
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
@@ -100,19 +111,26 @@ public class Parttime_Ball extends JFrame implements ActionListener{
 		JButton startBtn;
 		
 		public ReadyPanel() {
+			setLayout(new BorderLayout());
+			
+			JLabel title = new JLabel("공피하기 게임");
+			title.setFont(new Font("Serif", Font.BOLD, 25));
+			JLabel guide = new JLabel("파란 공을 피해 빨간 공과 초록 공을 클릭하세요!\n 빨간공 +1 / 초록공 +2 / 파란공 -1");
 			startBtn = new JButton("시작");
-			add(startBtn);
+			add(title, BorderLayout.NORTH);
+			add(guide, BorderLayout.CENTER);
+			add(startBtn, BorderLayout.SOUTH);
 			
 			startBtn.addActionListener(e -> {
 	            setVisible(false);
 	            ballPanel.setVisible(true);
+	            startGame();
 			});
 		}
 	}
 	
 	class BallPanel extends JPanel{
 		Ball[] ballArr = new Ball[10];
-		JLabel scoreLabel;
 		
 		public BallPanel(){
 //			for (int i = 0; i < ballArr.length; i++) {
@@ -163,4 +181,23 @@ public class Parttime_Ball extends JFrame implements ActionListener{
 		// TODO Auto-generated method stub
 		repaint();
 	}
+	
+	private void startGame() {
+        gameTimer.start();
+    }
+
+    private void endGame() {
+        gameTimer.stop();
+        JOptionPane.showMessageDialog(null, "게임 종료! 당신의 점수는 " + score + "입니다.", "게임 종료", JOptionPane.INFORMATION_MESSAGE);
+        if(0 < score && score <= 5) {
+        	player.setMoney(player.getMoney()+5);
+        }
+        else if(5 < score && score <= 10) {
+        	player.setMoney(player.getMoney()+10);
+        }
+        else if(10 < score) {
+        	player.setMoney(player.getMoney()+15);
+        }
+        dispose();
+    }
 }

@@ -357,7 +357,7 @@ public class UI extends JFrame {
 
 			// 액션 화면 프레임
 			StudyBackground studyBackground = new StudyBackground();
-			WorkBackground workBackground = new WorkBackground();
+			WorkBackground workBackground = new WorkBackground(player);
 			SleepBackground sleepBackground = new SleepBackground();
 			EatBackground eatBackground = new EatBackground();
 			PlayBackground playBackground = new PlayBackground();

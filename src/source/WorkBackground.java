@@ -9,12 +9,13 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class WorkBackground extends JFrame {
+	private Player player;
 	private Image background;
 	private ImageIcon poopAvoidButtonImage, ballClickButtonImage;
 	private JButton poopAvoidButton, ballClickButton;
 	
-	public WorkBackground() {
-		
+	public WorkBackground(Player player) {
+		this.player = player;
 		background = new ImageIcon("src/img/work_background.png").getImage();
 		poopAvoidButtonImage = new ImageIcon("src/img/poopgame_button.png");
 		poopAvoidButton = new JButton(poopAvoidButtonImage);
@@ -40,12 +41,12 @@ public class WorkBackground extends JFrame {
 		
 		//공 클릭하기 게임 누르면 실행될 프레임 불러오기
 		ballClickButton.addActionListener(( e -> {
-			dispose();
 			//TODO: 실행될 공 클릭하기 프레임 입력
+			new Parttime_Ball(player);
+			dispose();
 		}));
 		
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		
 	}
 	
 	public void paint(Graphics g) {
