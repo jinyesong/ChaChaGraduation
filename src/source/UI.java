@@ -42,8 +42,8 @@ public class UI extends JFrame {
 		setLocationRelativeTo(null);
 
 		this.player = player;
-		season = player.timeManager.getSeason(); // 초기 계절 = 봄
-		grade = player.getLevel(); // 초기 학년 = 1학년
+		season = player.timeManager.getSeason();// 초기 계절 = 봄
+//		grade = player.getLevel(); // 초기 학년 = 1학년
 //		money = player.getMoney(); // 초기 돈 액수 = 0원
 //		clicks = 0; // 초기 클릭수 = 0
 //		knowledge = player.getKnowledge(); // 초기 지식 스탯
@@ -217,6 +217,7 @@ public class UI extends JFrame {
 		}
 
 		private ImageIcon getFrameIconForSeason(int season) {
+			System.out.println("Current Season: " + season); // Add this line
 			switch (season) {
 			case 1:
 				return new ImageIcon("src/img/spring.jpg");
@@ -372,7 +373,8 @@ public class UI extends JFrame {
 			});
 			workButton.addActionListener(e -> {
 				player.setMoney(player.getMoney() + 20);
-				showBackgoundFrame(workBackground);
+				workBackground.setVisible(true);
+				workBackground.setLocationRelativeTo(null);
 				clickCheck();
 			});
 			sleepButton.addActionListener(e -> {
