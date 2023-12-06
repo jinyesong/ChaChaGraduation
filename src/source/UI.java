@@ -26,10 +26,6 @@ public class UI extends JFrame {
 	Below belowPanel;
 
 	Player player;
-//	int money; // 돈
-//	int clicks; // 클릭수(계절 당 클릭수를 경험치처럼 표현하기 위함)
-//	int knowledge; // 지식 스탯
-//	int happiness; // 행복 스탯
 
 	public UI(Player player) {
 		setSize(Main_WIDTH + 14, Main_HEIGHT + 37);
@@ -40,11 +36,6 @@ public class UI extends JFrame {
 		setLocationRelativeTo(null);
 
 		this.player = player;
-//		money = player.getMoney(); // 초기 돈 액수 = 0원
-//		clicks = 0; // 초기 클릭수 = 0
-//		knowledge = player.getKnowledge(); // 초기 지식 스탯
-//		happiness = player.getHappiness(); // 초기 행복 스탯
-
 		chachaPanel = new ChaCha();
 		chachaPanel.setBounds(0, 0, Main_WIDTH, Main_HEIGHT);
 		add(chachaPanel);
@@ -53,7 +44,7 @@ public class UI extends JFrame {
 		statPanel.setBounds(0, 0, Main_WIDTH, 100); // ChaCha 패널과 크기를 맞춤
 		chachaPanel.add(statPanel); // ChaCha 패널에 Stat 패널 추가
 
-		belowPanel = new Below(this);
+		belowPanel = new Below();
 		belowPanel.setBounds(0, 470, Main_WIDTH, Main_HEIGHT);
 		chachaPanel.add(belowPanel);
 
@@ -61,14 +52,10 @@ public class UI extends JFrame {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
 	}
-	public Player getPlayer(){
-		return player;
-	}
 
 	public void clickCheck() {
 		// player의 click수 업데이트
 		player.timeManager.addClickCount();
-		// click수에 따른 이벤트 처리
 
 		// 돈 수치 별 엔딩 화면
 		if (player.timeManager.getClickCount() == 160) {
@@ -348,8 +335,7 @@ public class UI extends JFrame {
 		ImageIcon eatIcon = new ImageIcon("src/img/eat.png");
 		ImageIcon playIcon = new ImageIcon("src/img/play.png");
 
-		public Below(UI UI) {
-			this.UI = UI;
+		public Below() {
 			setLayout(null);
 
 			// 차차 버튼 불러오기

@@ -35,8 +35,9 @@ public class WorkBackground extends JFrame {
 		
 		//똥 피하기 게임 누르면 실행될 프레임 불러오기
 		poopAvoidButton.addActionListener(e -> {
-			dispose(); //버튼을 누르면 알바 프레임이 닫힘
+			new Parttime_avoidPoop(player);
 			//TODO: 실행될 똥 피하기 게임 프레임 입력
+			dispose(); //버튼을 누르면 알바 프레임이 닫힘
 		});
 		
 		//공 클릭하기 게임 누르면 실행될 프레임 불러오기

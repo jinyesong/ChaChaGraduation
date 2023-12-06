@@ -36,6 +36,7 @@ public class LoginFrame extends JFrame implements ActionListener{
     public LoginFrame() {
         setTitle("대학생 차차 키우기");
         setSize(550, 700);
+        setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
  
         // 레이아웃 설정

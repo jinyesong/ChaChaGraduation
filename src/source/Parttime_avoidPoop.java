@@ -17,7 +17,6 @@ import java.util.ArrayList;
 
 public class Parttime_avoidPoop extends JFrame {
     public static ArrayList<DroppingObject> poopList = new ArrayList<>();
-    UI UI;
     Player player;
     Avoider chacha = new Avoider();
     OnPlayingScreen playingScreen = new OnPlayingScreen(chacha);
@@ -25,10 +24,9 @@ public class Parttime_avoidPoop extends JFrame {
     DroppingThread droppingThread;
 
 
-    Parttime_avoidPoop(UI UI) {
-        this.UI = UI;
-        this.player = UI.getPlayer();
-        droppingThread = new DroppingThread(playingScreen, chacha, UI, player);
+    Parttime_avoidPoop(Player player) {
+        this.player = player;
+        droppingThread = new DroppingThread(playingScreen, this, chacha, player);
         setTitle("똥 피하기 게임");
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         StartScreen startScreen = new StartScreen(this, playingScreen, producingPoopThread, droppingThread);
@@ -38,17 +36,13 @@ public class Parttime_avoidPoop extends JFrame {
         setVisible(true);
     }
 
-
-    // public static void main(String[] args) {
-    //     new Parttime_avoidPoop();
-    // }
+     public void quit() {
+    	 dispose();
+     }
 }
 
 class StartScreen extends JPanel {
-
-
         private Image background = new ImageIcon("src/img/avoidPoop_startScreen.png").getImage();
-
 		OnPlayingScreen playingScreen;
 		Parttime_avoidPoop mainScreen;
 		ProducingObject producingPoopThread;
@@ -162,20 +156,19 @@ class OnPlayingScreen extends JPanel { //플레이 화면
 	}
 }
 class DroppingThread extends Thread {
-
+	Parttime_avoidPoop mainFrame;
 	OnPlayingScreen playingScreen;
-    UI UI;
     Player player;
 	Avoider chacha;
 	DroppingObject poopSample = new DroppingObject();
 	boolean vForCrushingCount;
     volatile boolean terminationFlag = true;
 	
-	DroppingThread(OnPlayingScreen playingScreen, Avoider chacha, UI UI, Player player){
+	DroppingThread(OnPlayingScreen playingScreen, Parttime_avoidPoop mainFrame, Avoider chacha, Player player){
+		this.mainFrame = mainFrame;
 		this.playingScreen = playingScreen;
 		this.chacha = chacha;
         this.player = player;
-        this.UI = UI;
 	}
 	
 	
@@ -187,11 +180,13 @@ class DroppingThread extends Thread {
 	
 	
 	public void handleCrushing(DroppingObject poopForHandling, boolean crushingCount) {
-		
 		int poopX = poopForHandling.getX();
 		int poopY = poopForHandling.getY();
 		int chachaX = chacha.getX();
 		int chachaY = chacha.getY();
+		long end = System.currentTimeMillis();
+        int aliveTime = (int)((end - StartScreen.start)/1000.0f);
+        int earnedMoney = 0;
 		
 			if(chachaX >= poopX) {
 			if(((chachaX+chacha.getWidth())-poopX-(chacha.getWidth() + poopSample.getWidth()) <= 0)&&(((chachaY+chacha.getHeight()) - poopY - (chacha.getHeight() + poopSample.getHeight()) <=0))) {
@@ -210,24 +205,22 @@ class DroppingThread extends Thread {
 				}
 			}
 		} 
-		
 			
 		if(chacha.life ==0) {
-			long end = System.currentTimeMillis();
-            int aliveTime = (int)((end - StartScreen.start)/1000.0f);
-            
-            int earnedMoney;
-            if(aliveTime<=10) earnedMoney = 0;
-            else if(aliveTime<=20) earnedMoney = 5;
-            else earnedMoney = 15;
-            
-            player.setMoney(player.getMoney()+earnedMoney);
-
-            UI.statPanel.repaint(); // 액션 스탯 업데이트
-		    UI.belowPanel.repaint(); // 클릭 스탯 업데이트
-	        JOptionPane.showMessageDialog(null, ""+ aliveTime+" 초 동안 버텼습니다.\n축하합니다!! +"+ earnedMoney + "만큼 머니 스탯이 상승합니다!");
+            if(5 <= aliveTime && aliveTime <= 10) {
+            	earnedMoney = 5;
+            }
+            else if(10 < aliveTime && aliveTime <= 20) {
+            	earnedMoney = 10;
+            }
+            else if(20 < aliveTime) {
+            	earnedMoney = 15;
+            }
+	        JOptionPane.showMessageDialog(null, "" + aliveTime + " 초 동안 버텼습니다.\n축하합니다!! "+ earnedMoney + "만큼 머니 스탯이 상승합니다!");
+	        player.setMoney(player.getMoney() + earnedMoney);
+	        mainFrame.dispose();
 		}
-	}       
+	} 
 
 	public void run(){
 			delay(500);
@@ -269,8 +262,6 @@ class DroppingThread extends Thread {
         Parttime_avoidPoop.poopList.clear();
         terminationFlag = false;
     }
-	
-	
 }
 
 class ProducingObject extends Thread{
@@ -318,6 +309,5 @@ class ProducingObject extends Thread{
     public void stopThread() {
         terminationFlag = false;
         this.stop();
-
     }
 }
