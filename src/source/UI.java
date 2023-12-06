@@ -102,7 +102,7 @@ public class UI extends JFrame {
 			setLayout(null);
 
 			// 학년 label 추가하기
-			gradeLabel = new JLabel(Integer.toString(player.getLevel()));
+			gradeLabel = new JLabel(Integer.toString(player.timeManager.getLevel()));
 			gradeLabel.setFont(new Font("Serif", Font.BOLD, 25));
 			gradeLabel.setHorizontalAlignment(JLabel.CENTER);
 			gradeLabel.setVerticalAlignment(JLabel.CENTER);
@@ -170,7 +170,7 @@ public class UI extends JFrame {
 			g.drawImage(chacha, x, y, this);
 
 			// 학년 표시 달력 그리기
-			ImageIcon gradeIcon = getFrameIconForGrade(player.getLevel());
+			ImageIcon gradeIcon = getFrameIconForGrade(player.timeManager.getLevel());
 			Image gradeImage = gradeIcon.getImage();
 
 			int grade_windowX = getWidth() * 7 / 10;
