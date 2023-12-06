@@ -17,14 +17,18 @@ import java.util.ArrayList;
 
 public class Parttime_avoidPoop extends JFrame {
     public static ArrayList<DroppingObject> poopList = new ArrayList<>();
+    UI UI;
     Player player;
     Avoider chacha = new Avoider();
     OnPlayingScreen playingScreen = new OnPlayingScreen(chacha);
     ProducingObject producingPoopThread = new ProducingObject(playingScreen, chacha);
-    DroppingThread droppingThread = new DroppingThread(playingScreen, chacha, player);
+    DroppingThread droppingThread;
 
-    Parttime_avoidPoop(Player player) {
-        this.player = player;
+
+    Parttime_avoidPoop(UI UI) {
+        this.UI = UI;
+        this.player = UI.getPlayer();
+        droppingThread = new DroppingThread(playingScreen, chacha, UI, player);
         setTitle("똥 피하기 게임");
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         StartScreen startScreen = new StartScreen(this, playingScreen, producingPoopThread, droppingThread);
@@ -33,6 +37,7 @@ public class Parttime_avoidPoop extends JFrame {
         setLocationRelativeTo(null);
         setVisible(true);
     }
+
 
     // public static void main(String[] args) {
     //     new Parttime_avoidPoop();
@@ -159,16 +164,18 @@ class OnPlayingScreen extends JPanel { //플레이 화면
 class DroppingThread extends Thread {
 
 	OnPlayingScreen playingScreen;
+    UI UI;
     Player player;
 	Avoider chacha;
 	DroppingObject poopSample = new DroppingObject();
 	boolean vForCrushingCount;
     volatile boolean terminationFlag = true;
 	
-	DroppingThread(OnPlayingScreen playingScreen, Avoider chacha, Player player){
+	DroppingThread(OnPlayingScreen playingScreen, Avoider chacha, UI UI, Player player){
 		this.playingScreen = playingScreen;
 		this.chacha = chacha;
         this.player = player;
+        this.UI = UI;
 	}
 	
 	
@@ -207,8 +214,18 @@ class DroppingThread extends Thread {
 			
 		if(chacha.life ==0) {
 			long end = System.currentTimeMillis();
-            int aliveTime = (int)((end - StartScreen.start)/1000.0f); 
-	        JOptionPane.showMessageDialog(null, ""+ aliveTime+" 초 동안 버텼습니다.");
+            int aliveTime = (int)((end - StartScreen.start)/1000.0f);
+            
+            int earnedMoney;
+            if(aliveTime<=10) earnedMoney = 0;
+            else if(aliveTime<=20) earnedMoney = 5;
+            else earnedMoney = 15;
+            
+            player.setMoney(player.getMoney()+earnedMoney);
+
+            UI.statPanel.repaint(); // 액션 스탯 업데이트
+		    UI.belowPanel.repaint(); // 클릭 스탯 업데이트
+	        JOptionPane.showMessageDialog(null, ""+ aliveTime+" 초 동안 버텼습니다.\n축하합니다!! +"+ earnedMoney + "만큼 머니 스탯이 상승합니다!");
 		}
 	}       
 
@@ -250,7 +267,6 @@ class DroppingThread extends Thread {
 	
     public void stopThread() {
         Parttime_avoidPoop.poopList.clear();
-        player.setKnowledge(0);
         terminationFlag = false;
     }
 	
