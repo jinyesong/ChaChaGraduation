@@ -75,6 +75,13 @@ public class UI extends JFrame {
 				new DropOutEnding();
 			}
 		}
+		
+		//축제이벤트 발생
+		if(player.timeManager.getClickCount() == 40) { //가을 -> 겨울 넘어갈 때
+			FestivalEventDialog festival = new FestivalEventDialog(player);
+			festival.setVisible(true);
+			festival.setLocationRelativeTo(null);
+		}
 
 		// player 정보 update되어 repaint
 		statPanel.repaint(); // 액션 스탯 업데이트

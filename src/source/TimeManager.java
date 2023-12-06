@@ -7,14 +7,11 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-//import TimeManager.FestivalEventDialog;
-
 public class TimeManager {
 	private String PlayerId;
     private int season;
     private int clickCount;
     private int level;
-    //private boolean festivalEventOccurred; // 이벤트가 발생했는지 여부를 나타내는 변수
 
     TimeManager(String id) { //신규
     	this.PlayerId = id;
@@ -58,18 +55,11 @@ public class TimeManager {
     
     private void changeSeason() {
     	if (getSeason() == 3) { //가을 -> 겨울 계절 변경시 이벤트 발생
-            showFestivalEvent(PlayerId);
+            //showFestivalEvent();
             //festivalEventOccurred = true; // 이벤트 발생 여부 업데이트
         }
         setSeason((getSeason() % 4) + 1); // 계절이 순환하도록 함
     }
-    
-    private void showFestivalEvent(String playerId) {
-        // PlayerId를 사용하여 Player 객체 생성
-        Player player = new Player(playerId);
-        
-        Event festivalEvent = new Event();
-        festivalEvent.festivalEvent(player);
 
 	public int getLevel() {
 		return level;
@@ -83,5 +73,4 @@ public class TimeManager {
 //        Event festivalEvent = new Event();
 //        festivalEvent.festivalEvent(PlayerId);
 //    }
-    }
 }
