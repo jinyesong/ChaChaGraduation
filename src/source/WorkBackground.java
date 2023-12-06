@@ -53,6 +53,6 @@ public class WorkBackground extends JFrame {
 	public void paint(Graphics g) {
 		g.drawImage(background, 0, 0, 564, 737, null);
 		poopAvoidButton.setBounds(170, 130, poopAvoidButtonImage.getIconWidth(), poopAvoidButtonImage.getIconHeight());
-		ballClickButton.setBounds(170, 140 + poopAvoidButtonImage.getIconHeight(), ballClickButtonImage.getIconWidth(), ballClickButtonImage.getIconHeight());
+		ballClickButton.setBounds(170, 150 + poopAvoidButtonImage.getIconHeight(), ballClickButtonImage.getIconWidth(), ballClickButtonImage.getIconHeight());
 	}
 }
