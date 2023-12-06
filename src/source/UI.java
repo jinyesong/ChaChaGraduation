@@ -450,7 +450,7 @@ public class UI extends JFrame {
 		// 클릭수에 따른 직사각형 모양 변화
 		private void drawClickRectangle(Graphics g, int clicks, int x, int y, int width, int height) {
 			// 클릭수의 백분율에 따라 채워지는 너비 계산
-			int filledWidth = width * clicks / 10;
+			int filledWidth = width * (clicks%10) / 10;
 
 			// 직사각형 그리기
 			g.setColor(Color.orange);
