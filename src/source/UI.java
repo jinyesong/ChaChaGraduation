@@ -214,6 +214,7 @@ public class UI extends JFrame {
 		}
 
 		private ImageIcon getFrameIconForSeason(int season) {
+			System.out.println("Current Season: " + season); // 디버깅: 현재 계절 상태 확인 **디버깅 후 삭제**
 			switch (season) {
 			case 1:
 				return new ImageIcon("src/img/spring.jpg");
@@ -229,6 +230,7 @@ public class UI extends JFrame {
 		}
 
 		private ImageIcon getFrameIconForGrade(int grade) {
+			System.out.println("Current Grade: " + grade); // 디버깅: 현재 학년 상태 확인 **디버깅 후 삭제**
 			switch (grade) {
 			case 1:
 				return new ImageIcon("src/img/grade1.png");
@@ -369,7 +371,8 @@ public class UI extends JFrame {
 			});
 			workButton.addActionListener(e -> {
 				player.setMoney(player.getMoney() + 20);
-				showBackgoundFrame(workBackground);
+				workBackground.setVisible(true);
+				workBackground.setLocationRelativeTo(null);
 				clickCheck();
 			});
 			sleepButton.addActionListener(e -> {
