@@ -21,12 +21,11 @@ public class FileIO {
 	public void saveGame(Player player) {
 		int[] timeInfo = player.getTimeManagerInfo();
 		
-        try (FileWriter file = new FileWriter( player.getId() + ".txt")) {
+        try (FileWriter file = new FileWriter( "src/user/" + player.getId() + ".txt")) {
         	file.write(player.getMoney()+"\n");
         	file.write(player.getKnowledge()+"\n");
         	file.write(player.getHappiness()+"\n");
-        	file.write(player.getLevel()+"\n");
-        	file.write(timeInfo[0]+"\n"+timeInfo[1]+"\n"); //0:clickcount 1:season
+        	file.write(timeInfo[0]+"\n"+timeInfo[1]+"\n"+timeInfo[2]+"\n"); //0:clickcount 1:season 2:level
             file.flush();
         } catch (IOException e) {
             e.printStackTrace();
@@ -48,17 +47,17 @@ public class FileIO {
     	int money = Integer.parseInt(readArr.get(0)); //파일의 첫번째 줄에 money 정보 저장
     	int knowledge = Integer.parseInt(readArr.get(1)); //파일의 두번째 줄에 knowledge 정보 저장
     	int happiness = Integer.parseInt(readArr.get(2)); //파일의 세번째 줄에 happiness 정보 저장
-    	int level = Integer.parseInt(readArr.get(3)); //파일의 네번째 줄에 level 정보 저장
-    	int clickCount = Integer.parseInt(readArr.get(4)); //파일의 다섯번째 줄에 clickCount 정보 저장
-    	int season = Integer.parseInt(readArr.get(5)); //파일의 여섯번째 줄에 season 정보 저장
-    	TimeManager tm = new TimeManager(id, clickCount, season);
-    	Player player = new Player(id, money, knowledge, happiness, level, tm);
+    	int clickCount = Integer.parseInt(readArr.get(3)); //파일의 네번째 줄에 clickCount 정보 저장
+    	int season = Integer.parseInt(readArr.get(4)); //파일의 다섯번째 줄에 season 정보 저장
+    	int level = Integer.parseInt(readArr.get(5)); //파일의 여섯번째 줄에 level 정보 저장
+    	TimeManager tm = new TimeManager(id, clickCount, season, level);
+    	Player player = new Player(id, money, knowledge, happiness, tm);
     	return player;
     }
     
     public Player createPlayerFile(String id) { 
         try (FileWriter file = new FileWriter("src/user/" + id + ".txt")) {
-            file.write(0+"\n"+0+"\n"+70+"\n"+1+"\n"); //money, knowledge, happiness, level 순서로 저장
+            file.write(0+"\n"+0+"\n"+50+"\n"+0+"\n"+1+"\n"+1+"\n"); //money, knowledge, happiness, clickCount, season, level순서로 저장
             file.flush();
         } catch (IOException e) {
             e.printStackTrace();
