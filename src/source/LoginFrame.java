@@ -52,7 +52,7 @@ public class LoginFrame extends JFrame implements ActionListener{
             System.out.println("이미지 불러오기 실패");
             System.exit(0);
         }
-         
+        
         MyPanel panel = new MyPanel();
         panel.setBounds(0, 0, 1600, 900);
          

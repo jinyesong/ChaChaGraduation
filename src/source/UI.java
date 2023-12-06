@@ -53,13 +53,16 @@ public class UI extends JFrame {
 		statPanel.setBounds(0, 0, Main_WIDTH, 100); // ChaCha 패널과 크기를 맞춤
 		chachaPanel.add(statPanel); // ChaCha 패널에 Stat 패널 추가
 
-		belowPanel = new Below();
+		belowPanel = new Below(this);
 		belowPanel.setBounds(0, 470, Main_WIDTH, Main_HEIGHT);
 		chachaPanel.add(belowPanel);
 
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
+	}
+	public Player getPlayer(){
+		return player;
 	}
 
 	public void clickCheck() {
@@ -337,7 +340,7 @@ public class UI extends JFrame {
 
 	class Below extends JPanel {
 		JButton studyButton, workButton, sleepButton, eatButton, playButton;
-
+    
 		// 차차 액션 아이콘 불러오기
 		ImageIcon studyIcon = new ImageIcon("src/img/study.png");
 		ImageIcon workIcon = new ImageIcon("src/img/work.png");
@@ -345,7 +348,8 @@ public class UI extends JFrame {
 		ImageIcon eatIcon = new ImageIcon("src/img/eat.png");
 		ImageIcon playIcon = new ImageIcon("src/img/play.png");
 
-		public Below() {
+		public Below(UI UI) {
+			this.UI = UI;
 			setLayout(null);
 
 			// 차차 버튼 불러오기
