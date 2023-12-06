@@ -47,9 +47,9 @@ public class FileIO {
     	int money = Integer.parseInt(readArr.get(0)); //파일의 첫번째 줄에 money 정보 저장
     	int knowledge = Integer.parseInt(readArr.get(1)); //파일의 두번째 줄에 knowledge 정보 저장
     	int happiness = Integer.parseInt(readArr.get(2)); //파일의 세번째 줄에 happiness 정보 저장
-    	int level = Integer.parseInt(readArr.get(3)); //파일의 네번째 줄에 clickCount 정보 저장
-    	int clickCount = Integer.parseInt(readArr.get(4)); //파일의 다섯번째 줄에 season 정보 저장
-    	int season = Integer.parseInt(readArr.get(5)); //파일의 여섯번째 줄에 level 정보 저장
+    	int clickCount = Integer.parseInt(readArr.get(3)); //파일의 네번째 줄에 clickCount 정보 저장
+    	int season = Integer.parseInt(readArr.get(4)); //파일의 다섯번째 줄에 season 정보 저장
+    	int level = Integer.parseInt(readArr.get(5)); //파일의 여섯번째 줄에 level 정보 저장
     	TimeManager tm = new TimeManager(id, clickCount, season, level);
     	Player player = new Player(id, money, knowledge, happiness, tm);
     	return player;
