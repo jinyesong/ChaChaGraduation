@@ -77,7 +77,7 @@ public class UI extends JFrame {
 		}
 		
 		//축제이벤트 발생
-		if(player.timeManager.getClickCount() == 40) { //가을 -> 겨울 넘어갈 때
+		if(player.timeManager.getClickCount() == 30) { //가을 -> 겨울 넘어갈 때
 			FestivalEventDialog festival = new FestivalEventDialog(player);
 			festival.setVisible(true);
 			festival.setLocationRelativeTo(null);
