@@ -59,16 +59,23 @@ public class UI extends JFrame {
 
 		// 돈 수치 별 엔딩 화면
 		if (player.timeManager.getClickCount() == 160) {
-			if (player.getMoney() >= 800) {
-				this.setVisible(false);
-				new GraduateSchoolEnding();
-			} else if (player.getMoney() < 800 && player.getMoney() >= 500) {
-				this.setVisible(false);
-				new GraduationEnding();
-			} else if (player.getMoney() < 500) {
-				this.setVisible(false);
-				new FailEnding();
-			}
+			chachaPanel.setVisible(false);
+			//엔딩확인 버튼 생성
+			JButton goEnding = new JButton("엔딩보기"); 
+			goEnding.setBounds(0, 0, 50, 50);
+			add(goEnding);
+			
+			goEnding.addActionListener(e -> {
+				dispose();
+				if (player.getMoney() >= 800) {
+					new GraduateSchoolEnding();
+				} else if (player.getMoney() < 800 && player.getMoney() >= 500) {
+					new GraduationEnding();
+				} else if (player.getMoney() < 500) {
+					new FailEnding();
+				}
+			});
+
 		} else if (player.timeManager.getClickCount() < 160) {
 			if (player.getHappiness() < 30) {
 				this.setVisible(false);

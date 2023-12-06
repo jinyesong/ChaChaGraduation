@@ -46,20 +46,12 @@ public class TimeManager {
 		clickCount++;
 		System.out.println(clickCount + "계절: " + season);
 		if (getClickCount() % 10 == 0) { //10이 될 때마다 계절 변경
-            changeSeason();
+			setSeason((getSeason() % 4) + 1); // 계절이 순환하도록 함
         }
-		if (getClickCount() % 40 == 0 ) {
+		if (getClickCount() % 40 == 0 ) { //레벨업
 			setLevel(getLevel()+1);
 		}
 	}
-    
-    private void changeSeason() {
-    	if (getSeason() == 3) { //가을 -> 겨울 계절 변경시 이벤트 발생
-            //showFestivalEvent();
-            //festivalEventOccurred = true; // 이벤트 발생 여부 업데이트
-        }
-        setSeason((getSeason() % 4) + 1); // 계절이 순환하도록 함
-    }
 
 	public int getLevel() {
 		return level;
