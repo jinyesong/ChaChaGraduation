@@ -21,10 +21,16 @@ public class WorkBackground extends JFrame {
 		ballClickButtonImage = new ImageIcon("src/img/ballclickgame_button.png");
 		ballClickButton = new JButton(ballClickButtonImage);
 		
-		
 		setTitle("차차 과외 알바하기");
 		setSize(564,737);
 		setLayout(null);
+		
+		for (JButton button : new JButton[] { poopAvoidButton, ballClickButton }) {
+			button.setBorderPainted(false);
+			button.setFocusPainted(false);
+			button.setContentAreaFilled(false);
+			add(button);
+		}
 		
 		//똥 피하기 게임 누르면 실행될 프레임 불러오기
 		poopAvoidButton.addActionListener(e -> {
@@ -37,14 +43,6 @@ public class WorkBackground extends JFrame {
 			dispose();
 			//TODO: 실행될 공 클릭하기 프레임 입력
 		}));
-		
-		for (JButton button : new JButton[] { poopAvoidButton, ballClickButton }) {
-			button.setBorderPainted(false);
-			button.setFocusPainted(false);
-			button.setContentAreaFilled(false);
-			add(button);
-		}
-		
 		
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		
