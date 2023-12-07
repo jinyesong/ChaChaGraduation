@@ -74,6 +74,4 @@ public class FileIO {
     	}
     	return true;
     }
-    
-    //public void deletePlayerFile(String playerID);
 }

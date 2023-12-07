@@ -56,14 +56,14 @@ class FestivalEventDialog extends JDialog {
         
         //TODO: 시험공부하기 선택 시 '지식'이 올라야 하는데 '돈'이 오름 (??)
         enjoyFestivalButton.addActionListener(e -> {
-            player.setKnowledge(player.getKnowledge() - 50);
-            player.setHappiness(player.getHappiness() + 40);
+            player.setKnowledge(player.getKnowledge() - 40);
+            player.setHappiness(player.getHappiness() + 20);
             dispose(); // 창 닫기
         });
 
         studyForFinalButton.addActionListener(e -> {
-            player.setKnowledge(player.getKnowledge() + 40);
-            player.setHappiness(player.getHappiness() - 50);
+            player.setKnowledge(player.getKnowledge() + 20);
+            player.setHappiness(player.getHappiness() - 40);
             dispose(); // 창 닫기
         });
 

@@ -66,17 +66,18 @@ public class UI extends JFrame {
 			
 			goEnding.addActionListener(e -> {
 				dispose();
-				if (player.getMoney() >= 800) {
+				if (70 < player.getKnowledge() && player.getMoney() >= 500) { //지식 70이상, 돈 500이상
 					new GraduateSchoolEnding();
-				} else if (player.getMoney() < 800 && player.getMoney() >= 500) {
+				} else if (50 < player.getKnowledge()) { //지식 50이상, 돈 500미만
 					new GraduationEnding();
-				} else if (player.getMoney() < 500) {
+					
+				} else if (player.getMoney() < 100) { //졸업 실패엔딩 -> ? 졸업(중간엔딩)?
 					new FailEnding();
 				}
 			});
 
 		} else if (player.timeManager.getClickCount() < 160) {
-			if (player.getHappiness() < 30) {
+			if (player.getHappiness() < 20) { //행복도 20이하 자퇴엔딩
 				this.setVisible(false);
 				new DropOutEnding();
 			}
@@ -378,21 +379,21 @@ public class UI extends JFrame {
 				clickCheck();
 			});
 			sleepButton.addActionListener(e -> {
-				player.setHappiness(player.getHappiness() + 15);
+				player.setHappiness(player.getHappiness() + 5);
 				showBackgoundFrame(sleepBackground);
 				clickCheck();
 			});
 			eatButton.addActionListener(e -> {
-				player.setHappiness(player.getHappiness() + 20);
-				player.setMoney(player.getMoney() - 10);
+				player.setHappiness(player.getHappiness() + 5);
+				player.setMoney(player.getMoney() - 5);
 				showBackgoundFrame(eatBackground);
 				clickCheck();
 			});
 
 			playButton.addActionListener(e -> {
 				player.setKnowledge(player.getKnowledge() - 10);
-				player.setHappiness(player.getHappiness() + 20);
-				player.setMoney(player.getMoney() - 15);
+				player.setHappiness(player.getHappiness() + 15);
+				player.setMoney(player.getMoney() - 10);
 				showBackgoundFrame(playBackground);
 				clickCheck();
 			});
