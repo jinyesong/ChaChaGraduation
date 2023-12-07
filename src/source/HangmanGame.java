@@ -23,7 +23,7 @@ public class HangmanGame extends JFrame {
     private JTextField inputField;                      //정답을 입력할 텍스트필드
     private JButton guessButton;                        //알파벳 입력 후 추측 버튼 클릭을 통해 확인
     private JTextArea outputArea;  
-    private int redFill;
+    private int hangmanFill;
     private Image currentImage;
     
 
@@ -92,7 +92,7 @@ public class HangmanGame extends JFrame {
         inputPanel.add(label);
         inputPanel.add(inputField);
         inputPanel.add(guessButton);
-        inputPanel.setBackground(Color.cyan);
+        inputPanel.setBackground(new Color(0, 160, 186));
 
             JPanel hangmanPanel = new JPanel() {
             @Override
@@ -113,9 +113,9 @@ public class HangmanGame extends JFrame {
             g2d.setStroke(new BasicStroke(3));
             g2d.drawRect(x, y, rectWidth, rectHeight);
 
-            g2d.setColor(Color.RED);
-            int redHeight = rectHeight * redFill / 100;
-            g2d.fillRect(x,y + (rectHeight - redHeight) , rectWidth , redHeight);
+            g2d.setColor(new Color(0, 160, 186));
+            int hangmanHeight = rectHeight * hangmanFill / 100;
+            g2d.fillRect(x,y + (rectHeight - hangmanHeight) , rectWidth , hangmanHeight);
 
             // 그릴 이미지 로드
             currentImage = new ImageIcon("src/img/차차.png").getImage();
@@ -125,7 +125,7 @@ public class HangmanGame extends JFrame {
             } 
             if (underscore.equals(correct)) { //정답 시
                 currentImage = new ImageIcon("src/img/해냈차차.png").getImage();
-                redFill = 0;
+                hangmanFill = 0;
                 repaint();
             }
             // 이미지를 사각형 안에 그리기
@@ -160,9 +160,8 @@ public class HangmanGame extends JFrame {
             
         } else {
             limit--;
-            redFill = 100 - (limit * 10);
+            hangmanFill = 100 - (limit * 10);
             outputArea.setText("현재 상태 : " + underscore + "\n" + "남은 횟수 : " + (limit));
-            currentImage = new ImageIcon("C:\\Users\\USER\\Desktop\\ChaChaGraduation-1\\src\\img\\틀렸차차.png").getImage();
             
         }
         
@@ -195,8 +194,6 @@ public class HangmanGame extends JFrame {
     private void endGame() { //게임이 끝나면 버튼 및 알파벳 입력칸 비활성화
         inputField.setEnabled(false);
         guessButton.setEnabled(false);
-        
-        repaint();
     }
 
     public static void main(String[] args) {
