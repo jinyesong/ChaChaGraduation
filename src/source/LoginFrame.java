@@ -25,7 +25,8 @@ public class LoginFrame extends JFrame implements ActionListener{
     BufferedImage img = null;
     JTextField loginTextField;
     JPasswordField passwordField;
-    JButton bt;
+    JButton loginButton;
+    JButton rankingButton;
  
     // 메인
     public static void main(String[] args) {
@@ -36,7 +37,6 @@ public class LoginFrame extends JFrame implements ActionListener{
     public LoginFrame() {
         setTitle("대학생 차차 키우기");
         setSize(550, 700);
-        setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
  
         // 레이아웃 설정
@@ -45,7 +45,6 @@ public class LoginFrame extends JFrame implements ActionListener{
         layeredPane.setBounds(0, 0, 1600, 900);
         layeredPane.setLayout(null);
  
-        // 패널1
         // 이미지 받아오기
         try {
             img = ImageIO.read(new File("src/img/login_page.png"));
@@ -53,7 +52,7 @@ public class LoginFrame extends JFrame implements ActionListener{
             System.out.println("이미지 불러오기 실패");
             System.exit(0);
         }
-        
+         
         MyPanel panel = new MyPanel();
         panel.setBounds(0, 0, 1600, 900);
          
@@ -68,16 +67,24 @@ public class LoginFrame extends JFrame implements ActionListener{
         loginTextField.setBorder(javax.swing.BorderFactory.createEmptyBorder());
         
         // 로그인버튼 추가
-        bt = new JButton(new ImageIcon("src/img/login_button.png"));
-        bt.setBounds(215, 450, 100, 55);
-        bt.addActionListener(this);
+        loginButton = new JButton(new ImageIcon("src/img/login_button.png"));
+        loginButton.setBounds(280, 450, 100, 55);
+        loginButton.addActionListener(this);
  
-        // 버튼 투명처리
-        bt.setBorderPainted(false);
-        bt.setFocusPainted(false);
-        bt.setContentAreaFilled(false);
- 
-        layeredPane.add(bt);
+        // 버튼 배경 투명처리
+        loginButton.setBorderPainted(false);
+        loginButton.setFocusPainted(false);
+        loginButton.setContentAreaFilled(false);
+        layeredPane.add(loginButton);
+        
+        // 랭킹버튼 추가 및 배경 투명 처리
+        rankingButton = new JButton(new ImageIcon("src/img/ranking_button.png"));
+        rankingButton.setBounds(150, 450, 100, 55);
+        rankingButton.addActionListener(this);
+        rankingButton.setBorderPainted(false);
+        rankingButton.setFocusPainted(false);
+        rankingButton.setContentAreaFilled(false);
+        layeredPane.add(rankingButton);
  
         // 마지막 추가들
         layeredPane.add(panel);
@@ -93,7 +100,7 @@ public class LoginFrame extends JFrame implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource() == bt) {
+		if(e.getSource() == loginButton) {
 			String id = loginTextField.getText();
 			FileIO fi = new FileIO();
 //			if(id == "") { //빈문자열

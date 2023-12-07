@@ -54,7 +54,7 @@ class FestivalEventDialog extends JDialog {
         setLayout(new BorderLayout());
         add(layeredPane, BorderLayout.CENTER);
         
-        //TODO: 시험공부하기 선택 시 '지식'이 올라야 하는데 '돈'이 오름 (??)
+        // 플레이어의 선택 별로 스탯 조절
         enjoyFestivalButton.addActionListener(e -> {
             player.setKnowledge(player.getKnowledge() - 40);
             player.setHappiness(player.getHappiness() + 20);
