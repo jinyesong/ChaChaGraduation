@@ -3,6 +3,8 @@ package source;
 import java.awt.*;
 import javax.swing.*;
 
+import source.UI.Stat;
+
 import java.awt.event.*;
 import java.io.*;
 import java.util.ArrayList;
@@ -17,16 +19,14 @@ import java.util.ArrayList;
 
 public class Parttime_avoidPoop extends JFrame {
     public static ArrayList<DroppingObject> poopList = new ArrayList<>();
-    Player player;
     Avoider chacha = new Avoider();
     OnPlayingScreen playingScreen = new OnPlayingScreen(chacha);
     ProducingObject producingPoopThread = new ProducingObject(playingScreen, chacha);
     DroppingThread droppingThread;
 
 
-    Parttime_avoidPoop(Player player) {
-        this.player = player;
-        droppingThread = new DroppingThread(playingScreen, this, chacha, player);
+    Parttime_avoidPoop(Player player, Stat ui) {
+        droppingThread = new DroppingThread(playingScreen, this, chacha, player, ui);
         setTitle("똥 피하기 게임");
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         StartScreen startScreen = new StartScreen(this, playingScreen, producingPoopThread, droppingThread);
@@ -35,10 +35,6 @@ public class Parttime_avoidPoop extends JFrame {
         setLocationRelativeTo(null);
         setVisible(true);
     }
-
-     public void quit() {
-    	 dispose();
-     }
 }
 
 class StartScreen extends JPanel {
@@ -159,16 +155,18 @@ class DroppingThread extends Thread {
 	Parttime_avoidPoop mainFrame;
 	OnPlayingScreen playingScreen;
     Player player;
+    Stat ui;
 	Avoider chacha;
 	DroppingObject poopSample = new DroppingObject();
 	boolean vForCrushingCount;
     volatile boolean terminationFlag = true;
 	
-	DroppingThread(OnPlayingScreen playingScreen, Parttime_avoidPoop mainFrame, Avoider chacha, Player player){
+	DroppingThread(OnPlayingScreen playingScreen, Parttime_avoidPoop mainFrame, Avoider chacha, Player player, Stat ui){
 		this.mainFrame = mainFrame;
 		this.playingScreen = playingScreen;
 		this.chacha = chacha;
         this.player = player;
+        this.ui = ui;
 	}
 	
 	
@@ -218,6 +216,7 @@ class DroppingThread extends Thread {
             }
 	        JOptionPane.showMessageDialog(null, "" + aliveTime + " 초 동안 버텼습니다.\n축하합니다!! "+ earnedMoney + "만큼 머니 스탯이 상승합니다!");
 	        player.setMoney(player.getMoney() + earnedMoney);
+	        ui.repaint();
 	        mainFrame.dispose();
 		}
 	} 

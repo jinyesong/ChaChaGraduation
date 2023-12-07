@@ -24,7 +24,6 @@ public class UI extends JFrame {
 	ChaCha chachaPanel;
 	Stat statPanel;
 	Below belowPanel;
-
 	Player player;
 
 	public UI(Player player) {
@@ -361,7 +360,7 @@ public class UI extends JFrame {
 
 			// 액션 화면 프레임
 			StudyBackground studyBackground = new StudyBackground();
-			WorkBackground workBackground = new WorkBackground(player);
+			WorkBackground workBackground = new WorkBackground(player, statPanel);
 			SleepBackground sleepBackground = new SleepBackground();
 			EatBackground eatBackground = new EatBackground();
 			PlayBackground playBackground = new PlayBackground();
@@ -374,7 +373,6 @@ public class UI extends JFrame {
 				clickCheck();
 			});
 			workButton.addActionListener(e -> {
-				player.setMoney(player.getMoney() + 20);
 				workBackground.setVisible(true);
 				workBackground.setLocationRelativeTo(null);
 				clickCheck();

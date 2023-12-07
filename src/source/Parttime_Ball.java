@@ -17,8 +17,11 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+import source.UI.Stat;
+
 public class Parttime_Ball extends JFrame implements ActionListener{
 	Player player;
+	Stat ui;
 	static final int WIDTH = 600;
 	static final int HEIGHT = 200;
 	private static final int PERIOD = 10;
@@ -30,8 +33,9 @@ public class Parttime_Ball extends JFrame implements ActionListener{
 	private static final int GAME_TIME_SECONDS = 20;
     private Timer gameTimer;
 	
-	Parttime_Ball(Player player){
+	Parttime_Ball(Player player, Stat ui){
 		this.player = player;
+		this.ui = ui;
 		score = 0;
 		ballPanel = new BallPanel();
 		ballPanel.setPreferredSize(new Dimension(WIDTH, HEIGHT));
@@ -198,6 +202,7 @@ public class Parttime_Ball extends JFrame implements ActionListener{
         else if(10 < score) {
         	player.setMoney(player.getMoney()+15);
         }
+        ui.repaint();
         dispose();
     }
 }

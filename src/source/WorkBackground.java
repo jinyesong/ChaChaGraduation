@@ -8,14 +8,18 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import source.UI.Stat;
+
 public class WorkBackground extends JFrame {
 	private Player player;
+	private Stat ui;
 	private Image background;
 	private ImageIcon poopAvoidButtonImage, ballClickButtonImage;
 	private JButton poopAvoidButton, ballClickButton;
 	
-	public WorkBackground(Player player) {
+	public WorkBackground(Player player, Stat ui) {
 		this.player = player;
+		this.ui = ui;
 		background = new ImageIcon("src/img/work_background.png").getImage();
 		poopAvoidButtonImage = new ImageIcon("src/img/poopgame_button.png");
 		poopAvoidButton = new JButton(poopAvoidButtonImage);
@@ -35,7 +39,7 @@ public class WorkBackground extends JFrame {
 		
 		//똥 피하기 게임 누르면 실행될 프레임 불러오기
 		poopAvoidButton.addActionListener(e -> {
-			new Parttime_avoidPoop(player);
+			new Parttime_avoidPoop(player, ui);
 			//TODO: 실행될 똥 피하기 게임 프레임 입력
 			dispose(); //버튼을 누르면 알바 프레임이 닫힘
 		});
@@ -43,7 +47,7 @@ public class WorkBackground extends JFrame {
 		//공 클릭하기 게임 누르면 실행될 프레임 불러오기
 		ballClickButton.addActionListener(( e -> {
 			//TODO: 실행될 공 클릭하기 프레임 입력
-			new Parttime_Ball(player);
+			new Parttime_Ball(player, ui);
 			dispose();
 		}));
 		
