@@ -59,32 +59,31 @@ public class UI extends JFrame {
 		// 돈 수치 별 엔딩 화면
 		if (player.timeManager.getClickCount() == 160) {
 			chachaPanel.setVisible(false);
-			//엔딩확인 버튼 생성
-			JButton goEnding = new JButton("엔딩보기"); 
-			goEnding.setBounds(0, 0, 50, 50);
+			// 엔딩확인 버튼 생성
+			JButton goEnding = new JButton("엔딩보기");
+			goEnding.setBounds(230, 310, 100, 50);
 			add(goEnding);
-			
+
 			goEnding.addActionListener(e -> {
 				dispose();
-				if (70 < player.getKnowledge() && player.getMoney() >= 500) { //지식 70이상, 돈 500이상
+				if (70 < player.getKnowledge() && player.getMoney() >= 500) { // 지식 70이상, 돈 500이상
 					new GraduateSchoolEnding();
-				} else if (50 < player.getKnowledge()) { //지식 50이상, 돈 500미만
+				} else if (50 < player.getKnowledge()) { // 지식 50이상, 돈 500미만
 					new GraduationEnding();
-					
-				} else if (player.getMoney() < 100) { //졸업 실패엔딩 -> ? 졸업(중간엔딩)?
+
+				} else if (player.getMoney() < 100) { // 졸업 실패엔딩 -> ? 졸업(중간엔딩)?
 					new FailEnding();
 				}
 			});
 
 		} else if (player.timeManager.getClickCount() < 160) {
-			if (player.getHappiness() < 20) { //행복도 20이하 자퇴엔딩
-				this.setVisible(false);
+			if (player.getHappiness() < 20) { // 행복도 20이하 자퇴엔딩 this.setVisible(false); 
 				new DropOutEnding();
 			}
 		}
-		
-		//축제이벤트 발생
-		if(player.timeManager.getClickCount() == 30) { //가을 -> 겨울 넘어갈 때
+
+		// 축제이벤트 발생
+		if (player.timeManager.getClickCount() == 30) { // 가을 -> 겨울 넘어갈 때
 			FestivalEventDialog festival = new FestivalEventDialog(player);
 			festival.setVisible(true);
 			festival.setLocationRelativeTo(null);
@@ -93,7 +92,7 @@ public class UI extends JFrame {
 		// player 정보 update되어 repaint
 		statPanel.repaint(); // 액션 스탯 업데이트
 		belowPanel.repaint(); // 클릭 스탯 업데이트
-		chachaPanel.repaint(); //계절 및 레벨 업데이트
+		chachaPanel.repaint(); // 계절 및 레벨 업데이트
 	}
 
 	class ChaCha extends JPanel {
@@ -341,7 +340,7 @@ public class UI extends JFrame {
 
 	class Below extends JPanel {
 		JButton studyButton, workButton, sleepButton, eatButton, playButton;
-    
+
 		// 차차 액션 아이콘 불러오기
 		ImageIcon studyIcon = new ImageIcon("src/img/study.png");
 		ImageIcon workIcon = new ImageIcon("src/img/work.png");
@@ -453,7 +452,7 @@ public class UI extends JFrame {
 		// 클릭수에 따른 직사각형 모양 변화
 		private void drawClickRectangle(Graphics g, int clicks, int x, int y, int width, int height) {
 			// 클릭수의 백분율에 따라 채워지는 너비 계산
-			int filledWidth = width * (clicks%10) / 10;
+			int filledWidth = width * (clicks % 10) / 10;
 
 			// 직사각형 그리기
 			g.setColor(Color.orange);
