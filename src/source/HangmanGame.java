@@ -2,12 +2,15 @@ package source;
 
 import java.awt.*;
 import java.awt.event.*;
+
+import javax.print.attribute.standard.JobName;
 import javax.swing.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import source.UI.Stat;
 
 
 
@@ -23,12 +26,19 @@ public class HangmanGame extends JFrame {
     private JTextField inputField;                      //정답을 입력할 텍스트필드
     private JButton guessButton;                        //알파벳 입력 후 추측 버튼 클릭을 통해 확인
     private JTextArea outputArea;  
-    private int redFill;
+    private int waterFill;
     private Image currentImage;
-    
+    private Player player;
+    private Stat ui;
+    private static int startcnt;
 
-    public HangmanGame() {
+    public HangmanGame(Player player , Stat ui) {
+        this.player = player;
+        this.ui = ui;
         try {
+            if (startcnt == 0){
+            firstScreen();
+            }
             readText();                                                 //hangman.txt 에서 문제를 불러옴
             this.index = (int) (this.wordList.size() * Math.random());  //문제는 랜덤하게 지정
             this.question = wordList.get(index);                        
@@ -39,19 +49,52 @@ public class HangmanGame extends JFrame {
             componentsMaker();                                          //추측 버튼과 알파벳 입력 필드 구성
 
             setTitle("행맨 게임");      
-            setSize(550,700);       
-            setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            setSize(700,800);       
+            setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             setLocationRelativeTo(null);                              //모니터 중앙에 표시
             setLayout(new BorderLayout());                              
             addComponents();                                            //입력 결과와 차차그림(행맨) 표시
-            setVisible(true);
+            
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private void readText() throws IOException {                        //문제 불러오는 부분
-        try (BufferedReader br = new BufferedReader(new FileReader("hangman.txt"))) {
+    public void firstScreen() {
+        startcnt += 1;
+        JFrame fr = new JFrame("행맨 게임");
+        fr.setSize(700,800);
+        fr.setLocationRelativeTo(null);
+
+        JPanel pn = new JPanel();
+        JLabel lb = new JLabel("알파벳을 하나씩 입력해 단어를 맞춰보세요!\n 제한 입력은 10번입니다.");
+        lb.setBounds(50,200,600,50);
+        
+        JButton startBtn = new JButton("시작");
+
+        startBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                fr.dispose();
+                new HangmanGame(player,ui).setVisible(true);
+                
+            }
+            
+        });
+        pn.setLayout(null);
+        startBtn.setBounds(260, 670 , 160, 70);
+    
+        pn.add(lb);
+        pn.add(startBtn);
+        
+        
+
+        fr.add(pn);
+        fr.setVisible(true);
+    }
+
+    public void readText() throws IOException {                        //문제 불러오는 부분
+        try (BufferedReader br = new BufferedReader(new FileReader("src/hangman.txt"))) {
             String line;
             while((line = br.readLine()) != null) {
                 wordList.add(line.trim());
@@ -59,7 +102,7 @@ public class HangmanGame extends JFrame {
         }
     }   
 
-    private void underscoreMaker() {
+    public void underscoreMaker() {
        StringBuilder str1 = new StringBuilder();                        //str1에 문제 길이만큼의 밑줄을
        StringBuilder str2 = new StringBuilder();                        //str2에 문제를 저장
        for (int i = 0; i < question.length(); i++) {
@@ -70,7 +113,7 @@ public class HangmanGame extends JFrame {
        this.correct = new String(str2);                                 //correct에 저장
     }
 
-    private void componentsMaker() {
+    public void componentsMaker() {
         inputField = new JTextField(1);                                           //알파벳 입력 필드
         guessButton = new JButton(new ImageIcon("src/img/guess_button.png"));   //추측 버튼
         guessButton.setBorderPainted(false);                                           //버튼 다듬기 작업
@@ -86,13 +129,13 @@ public class HangmanGame extends JFrame {
         }); 
     }
 
-    private void addComponents() {
+    public void addComponents() {
         JPanel inputPanel = new JPanel(new FlowLayout());
         JLabel label = new JLabel("문자를 입력해주세요(한글자 영어) : ");
         inputPanel.add(label);
         inputPanel.add(inputField);
         inputPanel.add(guessButton);
-        inputPanel.setBackground(Color.cyan);
+        inputPanel.setBackground(new Color(0, 160, 186));
 
             JPanel hangmanPanel = new JPanel() {
             @Override
@@ -113,9 +156,9 @@ public class HangmanGame extends JFrame {
             g2d.setStroke(new BasicStroke(3));
             g2d.drawRect(x, y, rectWidth, rectHeight);
 
-            g2d.setColor(Color.RED);
-            int redHeight = rectHeight * redFill / 100;
-            g2d.fillRect(x,y + (rectHeight - redHeight) , rectWidth , redHeight);
+            g2d.setColor(new Color(0, 160, 186));
+            int waterHeight = rectHeight * waterFill / 100;
+            g2d.fillRect(x,y + (rectHeight - waterHeight) , rectWidth , waterHeight);
 
             // 그릴 이미지 로드
             currentImage = new ImageIcon("src/img/차차.png").getImage();
@@ -125,8 +168,7 @@ public class HangmanGame extends JFrame {
             } 
             if (underscore.equals(correct)) { //정답 시
                 currentImage = new ImageIcon("src/img/해냈차차.png").getImage();
-                redFill = 0;
-                repaint();
+                
             }
             // 이미지를 사각형 안에 그리기
             g.drawImage(currentImage, x, y, rectWidth, rectHeight, this);
@@ -140,7 +182,7 @@ public class HangmanGame extends JFrame {
         
     }
 
-    private void processGuess() { //알파벳을 받는 순간 시작
+    public void processGuess() { //알파벳을 받는 순간 시작
         answer = inputField.getText();
         System.out.println(question + underscore);
         if (answer.length() != 1) {
@@ -154,15 +196,16 @@ public class HangmanGame extends JFrame {
         
         
         if (underscore.equals(correct)) {
-            outputArea.setText("정답을 맞췄습니다!\n ??원 획득!");
+            outputArea.setText("정답을 맞췄습니다!");
+            waterFill = 0;
             endGame();
 
             
         } else {
             limit--;
-            redFill = 100 - (limit * 10);
+            waterFill = 100 - (limit * 10);
             outputArea.setText("현재 상태 : " + underscore + "\n" + "남은 횟수 : " + (limit));
-            currentImage = new ImageIcon("C:\\Users\\USER\\Desktop\\ChaChaGraduation-1\\src\\img\\틀렸차차.png").getImage();
+            
             
         }
         
@@ -177,7 +220,7 @@ public class HangmanGame extends JFrame {
 
         repaint();
     }
-    private void compare() { //정답에 내가 입력한 알파벳이 있는지 확인
+    public void compare() { //정답에 내가 입력한 알파벳이 있는지 확인
         StringBuilder updatedUnderscore = new StringBuilder();
 
         for (int i = 0; i < question.length(); i++) {
@@ -192,18 +235,21 @@ public class HangmanGame extends JFrame {
         underscore = updatedUnderscore.toString();
     }
 
-    private void endGame() { //게임이 끝나면 버튼 및 알파벳 입력칸 비활성화
-        inputField.setEnabled(false);
-        guessButton.setEnabled(false);
-        
-        repaint();
+    public void endGame() { //게임이 끝나면 버튼 및 알파벳 입력칸 비활성화
+        int earnedMoney = 0;
+        if (limit == 0) {
+            earnedMoney = 0;
+        }
+        if (underscore.equals(correct)) {
+            earnedMoney = 10;
+        }
+        JOptionPane.showMessageDialog(null, "게임 종료! \n" + earnedMoney + "만큼 머니 스탯이 상승합니다!", "게임 종료", JOptionPane.INFORMATION_MESSAGE);
+        player.setMoney(player.getMoney() + earnedMoney);
+        ui.repaint();
+       
+        dispose();
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                new HangmanGame().setVisible(true);
-            }
-        });
-    }
+    
+    
 }

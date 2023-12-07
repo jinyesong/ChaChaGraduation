@@ -56,6 +56,7 @@ public class WorkBackground extends JFrame {
 		// 공 클릭하기 게임 누르면 실행될 프레임 불러오기
 		hangManButton.addActionListener((e -> {
 			//TODO: 행맨 게임 프레임 입력
+			new HangmanGame(player , ui);
 			dispose();
 		}));
 
