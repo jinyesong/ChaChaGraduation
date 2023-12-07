@@ -7,7 +7,6 @@ public class Player {
 	private int money;
 	private int knowledge;
 	private int happiness;
-	private int level;
 	TimeManager timeManager;
 	
 	public Player(String id) { //신규
@@ -15,27 +14,16 @@ public class Player {
 		setMoney(0);
 		setKnowledge(0);
 		setHappiness(70);
-		setLevel(1);
 		this.timeManager = new TimeManager(id);
 	}
 	
-	public Player(String id, int money, int knowledge, int happiness, int level, TimeManager tm) { //기존
+	public Player(String id, int money, int knowledge, int happiness, TimeManager tm) { //기존
 		this.id = id;
 		this.setMoney(money);
 		this.setKnowledge(knowledge);
 		this.setHappiness(happiness);
-		this.setLevel(level);
 		this.timeManager = tm;
 	}
-
-    public void levelUp() {
-    	setLevel(getLevel() + 1);
-    	
-    	if (knowledge >= 300) { //학년별로 다르게 수정해야 함
-            //JOptionPane.showMessageDialog(player, "레벨 업 성공! & 장학금 지급!");
-            setMoney(getMoney()+200);
-        }
-    }
     
     public String checkEndingConditions() {
     	if(getMoney() < 500) { //화석엔딩(BAD)
@@ -50,7 +38,7 @@ public class Player {
     }
     
     public int[] getTimeManagerInfo() {
-    	int[] info = {timeManager.getClickCount(), timeManager.getSeason()};
+    	int[] info = {timeManager.getClickCount(), timeManager.getSeason(), timeManager.getLevel()};
     	return info;
     }
     
@@ -71,7 +59,12 @@ public class Player {
 	}
 
 	public void setKnowledge(int knowledge) {
-		this.knowledge = knowledge;
+		if(100 < knowledge) {
+			this.knowledge = 100;
+		}
+		else {
+			this.knowledge = knowledge;
+		}
 	}
 	
 	public int getHappiness() {
@@ -79,14 +72,11 @@ public class Player {
 	}
 	
 	public void setHappiness(int happiness) {
-		this.happiness = happiness;
-	}
-
-	public int getLevel() {
-		return level;
-	}
-
-	public void setLevel(int level) {
-		this.level = level;
+		if(100 < happiness) {
+			this.happiness = 100;
+		}
+		else {
+			this.happiness = happiness;
+		}
 	}
 }

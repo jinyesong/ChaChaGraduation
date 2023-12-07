@@ -1,1 +1,6 @@
-{"money":4000,"happiness":100,"level":2,"knowledge":100}
+800
+40
+80
+154
+1
+1

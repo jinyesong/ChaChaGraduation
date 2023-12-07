@@ -36,6 +36,7 @@ public class LoginFrame extends JFrame implements ActionListener{
     public LoginFrame() {
         setTitle("대학생 차차 키우기");
         setSize(550, 700);
+        setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
  
         // 레이아웃 설정
@@ -52,7 +53,7 @@ public class LoginFrame extends JFrame implements ActionListener{
             System.out.println("이미지 불러오기 실패");
             System.exit(0);
         }
-         
+        
         MyPanel panel = new MyPanel();
         panel.setBounds(0, 0, 1600, 900);
          
