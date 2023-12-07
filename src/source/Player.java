@@ -24,15 +24,6 @@ public class Player {
 		this.setHappiness(happiness);
 		this.timeManager = tm;
 	}
-
-//    public void levelUp() {
-//    	setLevel(getLevel() + 1);
-//    	
-//    	if (knowledge >= 300) { //학년별로 다르게 수정해야 함
-//            //JOptionPane.showMessageDialog(player, "레벨 업 성공! & 장학금 지급!");
-//            setMoney(getMoney()+200);
-//        }
-//    }
     
     public String checkEndingConditions() {
     	if(getMoney() < 500) { //화석엔딩(BAD)
@@ -68,7 +59,12 @@ public class Player {
 	}
 
 	public void setKnowledge(int knowledge) {
-		this.knowledge = knowledge;
+		if(100 < knowledge) {
+			this.knowledge = 100;
+		}
+		else {
+			this.knowledge = knowledge;
+		}
 	}
 	
 	public int getHappiness() {
@@ -76,6 +72,11 @@ public class Player {
 	}
 	
 	public void setHappiness(int happiness) {
-		this.happiness = happiness;
+		if(100 < happiness) {
+			this.happiness = 100;
+		}
+		else {
+			this.happiness = happiness;
+		}
 	}
 }
