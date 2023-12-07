@@ -27,6 +27,7 @@ public class LoginFrame extends JFrame implements ActionListener{
     JPasswordField passwordField;
     JButton loginButton;
     JButton rankingButton;
+    Ranking rankingFrame;
  
     // 메인
     public static void main(String[] args) {
@@ -37,6 +38,7 @@ public class LoginFrame extends JFrame implements ActionListener{
     public LoginFrame() {
         setTitle("대학생 차차 키우기");
         setSize(550, 700);
+        setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
  
         // 레이아웃 설정
@@ -56,7 +58,9 @@ public class LoginFrame extends JFrame implements ActionListener{
         MyPanel panel = new MyPanel();
         panel.setBounds(0, 0, 1600, 900);
          
- 
+        rankingFrame = new Ranking();
+        rankingFrame.setVisible(false);
+        
         // 로그인 필드
         loginTextField = new JTextField(15);
         loginTextField.setBounds(150, 390, 290, 50);
@@ -85,6 +89,10 @@ public class LoginFrame extends JFrame implements ActionListener{
         rankingButton.setFocusPainted(false);
         rankingButton.setContentAreaFilled(false);
         layeredPane.add(rankingButton);
+        
+        rankingButton.addActionListener(e -> {
+        	rankingFrame.setVisible(true);
+        });
  
         // 마지막 추가들
         layeredPane.add(panel);

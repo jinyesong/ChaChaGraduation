@@ -109,7 +109,7 @@ public class Ranking extends JFrame{
 		add(showMoneyBtn);
 		
 		setVisible(true);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 	}
 	
 	class KnowledgeRanking extends JPanel{
