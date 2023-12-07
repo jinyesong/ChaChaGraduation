@@ -88,6 +88,16 @@ public class UI extends JFrame {
 			festival.setVisible(true);
 			festival.setLocationRelativeTo(null);
 		}
+		
+		//레벨업
+		if(player.timeManager.getClickCount()%40 == 0) {
+			if(70 < player.getKnowledge()) { //장학금
+				JOptionPane.showMessageDialog(null, "축하합니다. 성적우수장학생으로 선정되어 200만원의 장학금을 받습니다!\n"+player.timeManager.getLevel()+"학년이 되었습니다!");
+				player.setMoney(player.getMoney() + 200);
+			}else {
+				JOptionPane.showMessageDialog(null, player.timeManager.getLevel()+"학년이 되었습니다!");
+			}
+		}
 
 		// player 정보 update되어 repaint
 		statPanel.repaint(); // 액션 스탯 업데이트
