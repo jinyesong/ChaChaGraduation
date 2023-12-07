@@ -3,6 +3,9 @@ package source;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+
+import source.UI.Stat;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -10,8 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-
-public class HangmanGame extends JFrame {
+public class Parttime_Hangman extends JFrame {
     private List<String> wordList = new ArrayList<>();  //문제 리스트
     private int limit;                                  //제한 횟수, 여기서는 10으로 고정
     private int index;                                  //문제 번호 저장
@@ -25,10 +27,14 @@ public class HangmanGame extends JFrame {
     private JTextArea outputArea;  
     private int redFill;
     private Image currentImage;
+    private Player player;
+    private Stat ui;
     
 
-    public HangmanGame() {
+    public Parttime_Hangman(Player player, Stat ui) {
         try {
+        	this.player = player;
+        	this.ui = ui;
             readText();                                                 //hangman.txt 에서 문제를 불러옴
             this.index = (int) (this.wordList.size() * Math.random());  //문제는 랜덤하게 지정
             this.question = wordList.get(index);                        
@@ -51,7 +57,7 @@ public class HangmanGame extends JFrame {
     }
 
     private void readText() throws IOException {                        //문제 불러오는 부분
-        try (BufferedReader br = new BufferedReader(new FileReader("hangman.txt"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader("src/hangman.txt"))) {
             String line;
             while((line = br.readLine()) != null) {
                 wordList.add(line.trim());
@@ -154,24 +160,22 @@ public class HangmanGame extends JFrame {
         
         
         if (underscore.equals(correct)) {
-            outputArea.setText("정답을 맞췄습니다!\n ??원 획득!");
-            endGame();
+            endGame(true); //정답을 맞추면 true
 
             
         } else {
             limit--;
             redFill = 100 - (limit * 10);
             outputArea.setText("현재 상태 : " + underscore + "\n" + "남은 횟수 : " + (limit));
-            currentImage = new ImageIcon("C:\\Users\\USER\\Desktop\\ChaChaGraduation-1\\src\\img\\틀렸차차.png").getImage();
+            currentImage = new ImageIcon("src/img/틀렸차차.png").getImage();
             
         }
         
         if (limit == 0) {
                 outputArea.setText("정답을 맞추지 못했습니다 ㅠㅠ \n");
                 outputArea.append("정답 : " + this.question + "\n");
-                
-                
-                endGame();
+
+                endGame(false); //실패
             }
         
 
@@ -192,18 +196,23 @@ public class HangmanGame extends JFrame {
         underscore = updatedUnderscore.toString();
     }
 
-    private void endGame() { //게임이 끝나면 버튼 및 알파벳 입력칸 비활성화
+    private void endGame(boolean isSuccess) { //게임이 끝나면 버튼 및 알파벳 입력칸 비활성화
         inputField.setEnabled(false);
         guessButton.setEnabled(false);
-        
         repaint();
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                new HangmanGame().setVisible(true);
-            }
-        });
+        
+        //알바비 지급
+        int earnedMoney;
+        if(isSuccess) {
+        	earnedMoney = 15;
+        }
+        else {
+        	earnedMoney = 0;
+        }
+        
+        JOptionPane.showMessageDialog(null, "축하합니다! "+ earnedMoney + "만큼 머니 스탯이 상승합니다!");
+        player.setMoney(player.getMoney() + earnedMoney);
+        ui.repaint();
+        dispose();
     }
 }
