@@ -13,7 +13,7 @@ public class Player {
 		this.id = id;
 		setMoney(0);
 		setKnowledge(0);
-		setHappiness(70);
+		setHappiness(50);
 		this.timeManager = new TimeManager(id);
 	}
 	
