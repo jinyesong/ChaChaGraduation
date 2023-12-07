@@ -184,7 +184,7 @@ public class HangmanGame extends JFrame {
 
     public void processGuess() { //알파벳을 받는 순간 시작
         answer = inputField.getText();
-        System.out.println(question + underscore);
+        
         if (answer.length() != 1) {
             outputArea.append("한글자만 입력 가능합니다!.\n");
             return;
