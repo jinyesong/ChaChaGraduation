@@ -228,6 +228,8 @@ public class UI extends JFrame {
 			setOpaque(false); // 패널 배경을 투명하게 설정
 		}
 
+
+
 		@Override
 		protected void paintComponent(Graphics g) {
 			super.paintComponent(g);
