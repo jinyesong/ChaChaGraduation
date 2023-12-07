@@ -25,18 +25,6 @@ public class Player {
 		this.timeManager = tm;
 	}
     
-    public String checkEndingConditions() {
-    	if(getMoney() < 500) { //화석엔딩(BAD)
-    		return "BAD";
-    	}
-    	else if(500 < getMoney() && getMoney() < 800) { //졸업 엔딩(GOOD)
-    		return "GOOD";
-    	}
-    	else { //대학원 엔딩(HAPPY)
-    		return "HAPPY";
-    	}
-    }
-    
     public int[] getTimeManagerInfo() {
     	int[] info = {timeManager.getClickCount(), timeManager.getSeason(), timeManager.getLevel()};
     	return info;
