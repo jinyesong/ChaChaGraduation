@@ -192,16 +192,18 @@ public class Parttime_Ball extends JFrame implements ActionListener{
 
     private void endGame() {
         gameTimer.stop();
-        JOptionPane.showMessageDialog(null, "게임 종료! 당신의 점수는 " + score + "입니다.", "게임 종료", JOptionPane.INFORMATION_MESSAGE);
+        int earnedMoney = 0;
         if(0 < score && score <= 5) {
-        	player.setMoney(player.getMoney()+5);
+        	earnedMoney = 5;
         }
         else if(5 < score && score <= 10) {
-        	player.setMoney(player.getMoney()+10);
+        	earnedMoney = 10;
         }
         else if(10 < score) {
-        	player.setMoney(player.getMoney()+15);
+        	earnedMoney = 15;
         }
+        JOptionPane.showMessageDialog(null, "게임 종료! 당신의 점수는 " + score + "입니다.\n" + earnedMoney + "만큼 머니 스탯이 상승합니다!", "게임 종료", JOptionPane.INFORMATION_MESSAGE);
+        player.setMoney(player.getMoney() + earnedMoney);
         ui.repaint();
         dispose();
     }
