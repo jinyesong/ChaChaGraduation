@@ -6,8 +6,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.Point;
-import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -31,7 +30,7 @@ public class UI extends JFrame {
 		setTitle("차차 키우기");
 		setLayout(null);
 
-		// 프레임의 위치를 화면 중앙으로 설정**없어도 됨**
+		// 프레임의 위치를 화면 중앙으로 설정
 		setLocationRelativeTo(null);
 
 		this.player = player;
@@ -68,7 +67,7 @@ public class UI extends JFrame {
 				dispose();
 				if (70 < player.getKnowledge() && player.getMoney() >= 500) { // 지식 70이상, 돈 500이상 -> 대학원 엔딩
 					new GraduateSchoolEnding();
-				} else if (50 < player.getKnowledge()) { // 지식 50이상, 돈 500미만 -> 취업 엔딩
+				} else if (50 < player.getKnowledge() && 70 > player.getKnowledge() && 500 > player.getMoney()) { // 지식 50이상, 돈 500미만 -> 취업 엔딩
 					new EmploymentEnding();
 				} else{ // 졸업 -> 중간엔딩
 					new GraduationEnding();
@@ -111,13 +110,6 @@ public class UI extends JFrame {
 		public ChaCha() {
 			setSize(550, 700);
 			setLayout(null);
-
-			// 학년 label 추가하기
-			gradeLabel = new JLabel(Integer.toString(player.timeManager.getLevel()));
-			gradeLabel.setFont(new Font("Serif", Font.BOLD, 25));
-			gradeLabel.setHorizontalAlignment(JLabel.CENTER);
-			gradeLabel.setVerticalAlignment(JLabel.CENTER);
-			add(gradeLabel);
 
 			// 저장, 로그아웃 버튼 추가하기
 			logoutIcon = new ImageIcon("src/img/logout_button.png");
@@ -385,6 +377,7 @@ public class UI extends JFrame {
 			});
 			sleepButton.addActionListener(e -> {
 				player.setHappiness(player.getHappiness() + 5);
+				player.setKnowledge(player.getKnowledge() - 1);
 				showBackgoundFrame(sleepBackground);
 				clickCheck();
 			});
