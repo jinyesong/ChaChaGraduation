@@ -30,7 +30,7 @@ public class UI extends JFrame {
 		setTitle("차차 키우기");
 		setLayout(null);
 
-		// 프레임의 위치를 화면 중앙으로 설정**없어도 됨**
+		// 프레임의 위치를 화면 중앙으로 설정
 		setLocationRelativeTo(null);
 
 		this.player = player;
