@@ -62,10 +62,6 @@ public class Parttime_Ball extends JFrame implements ActionListener{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
-	public int getScore() {
-		return score; //score별로 받을 money를 계산해서 return해도 될듯
-	}
-	
 	class Ball{
 		private int x, y, xInc, yInc, diameter;
 		private Color color;
@@ -117,7 +113,7 @@ public class Parttime_Ball extends JFrame implements ActionListener{
 		public ReadyPanel() {
 			setLayout(new BorderLayout());
 			
-			JLabel title = new JLabel("공피하기 게임");
+			JLabel title = new JLabel("공 클릭하기 게임");
 			title.setFont(new Font("Serif", Font.BOLD, 25));
 			JLabel guide = new JLabel("파란 공을 피해 빨간 공과 초록 공을 클릭하세요!\n 빨간공 +1 / 초록공 +2 / 파란공 -1");
 			startBtn = new JButton("시작");
@@ -137,9 +133,6 @@ public class Parttime_Ball extends JFrame implements ActionListener{
 		Ball[] ballArr = new Ball[10];
 		
 		public BallPanel(){
-//			for (int i = 0; i < ballArr.length; i++) {
-//				ballArr[i] = new Ball();
-//			}
 			ballArr[0] = new Ball(60, Color.RED);
 			ballArr[1] = new Ball(40, Color.GREEN);
 			ballArr[2] = new Ball(50, Color.BLUE);
@@ -182,7 +175,6 @@ public class Parttime_Ball extends JFrame implements ActionListener{
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
 		repaint();
 	}
 	

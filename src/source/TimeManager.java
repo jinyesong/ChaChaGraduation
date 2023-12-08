@@ -20,7 +20,7 @@ public class TimeManager {
         this.setLevel(1);
     }
     
-    TimeManager(String id, int clickCount, int season, int level) { //누적
+    TimeManager(String id, int clickCount, int season, int level) { //기존
     	this.PlayerId = id;
         this.setSeason(season);
         this.setClickCount(clickCount);
@@ -44,7 +44,6 @@ public class TimeManager {
 	
 	public void addClickCount() {
 		clickCount++;
-		System.out.println(clickCount + "계절: " + season);
 		if (getClickCount() % 10 == 0) { //10이 될 때마다 계절 변경
 			setSeason((getSeason() % 4) + 1); // 계절이 순환하도록 함
         }
@@ -61,8 +60,4 @@ public class TimeManager {
 		this.level = level;
 	}
 
-//    private void showFestivalEvent() {
-//        Event festivalEvent = new Event();
-//        festivalEvent.festivalEvent(PlayerId);
-//    }
 }

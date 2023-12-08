@@ -18,7 +18,7 @@ import org.json.simple.parser.ParseException;
 
 public class FileIO {
 	
-	public void saveGame(Player player) {
+	public void saveGame(Player player) { //게임 중간 저장
 		int[] timeInfo = player.getTimeManagerInfo();
 		
         try (FileWriter file = new FileWriter( "src/user/" + player.getId() + ".txt")) {
@@ -32,7 +32,7 @@ public class FileIO {
         }
 	}
 	
-    public Player loadGame(String id) {
+    public Player loadGame(String id) { //저장된 정보 가져오기
     	ArrayList<String> readArr = new ArrayList<String>();
     	try {
     		String filePath = "src/user/" + id + ".txt";
@@ -55,7 +55,7 @@ public class FileIO {
     	return player;
     }
     
-    public Player createPlayerFile(String id) { 
+    public Player createPlayerFile(String id) { //신규 유저 파일 생성
         try (FileWriter file = new FileWriter("src/user/" + id + ".txt")) {
             file.write(0+"\n"+0+"\n"+50+"\n"+0+"\n"+1+"\n"+1+"\n"); //money, knowledge, happiness, clickCount, season, level순서로 저장
             file.flush();
@@ -66,7 +66,7 @@ public class FileIO {
         return player;
     }
     
-    public boolean findPlayer(String id) {
+    public boolean findPlayer(String id) { //유저 파일의 존재유무 검사
     	String filePath = "src/user/" + id + ".txt";
     	File file = new File(filePath);
     	if(!file.exists()) { //파일 이름이 존재하면 false
