@@ -66,15 +66,19 @@ public class UI extends JFrame {
 			goEnding.addActionListener(e -> {
 				dispose();
 				if (70 < player.getKnowledge() && player.getMoney() >= 500) { // 지식 70이상, 돈 500이상 -> 대학원 엔딩
+					dispose();
 					new GraduateSchoolEnding();
 				} else if (50 < player.getKnowledge() && 70 > player.getKnowledge() && 500 > player.getMoney()) { // 지식 50이상, 돈 500미만 -> 취업 엔딩
+					dispose();
 					new EmploymentEnding();
 				} else{ // 졸업 -> 중간엔딩
+					dispose();
 					new GraduationEnding();
 				}
 			});
 		} else if (player.timeManager.getClickCount() < 160) {
-			if (player.getHappiness() < 20) { // 행복도 20이하 자퇴엔딩 
+			if (player.getHappiness() < 20) { // 행복도 20이하 자퇴엔딩
+				dispose();
 				new DropOutEnding();
 			}
 		}
