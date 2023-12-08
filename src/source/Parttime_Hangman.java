@@ -65,11 +65,14 @@ public class Parttime_Hangman extends JFrame {
         fr.setSize(700,800);
         fr.setLocationRelativeTo(null);
 
-        JPanel pn = new JPanel();
-        JLabel lb = new JLabel("알파벳을 하나씩 입력해 단어를 맞춰보세요!\n  제한 입력은 10번입니다.");
-        lb.setBounds(50,200,600,50);
+        JPanel pn = new JPanel(){
+            Image background = new ImageIcon("src/img/hangman_readyPanel.png").getImage();
+            public void paintComponent(Graphics g) {
+                g.drawImage(background, 0, 0, 690, 780, null);
+        }
+        };
 
-        JButton startBtn = new JButton("시작");
+        JButton startBtn = new JButton(); //시작하기 버튼
 
         startBtn.addActionListener(new ActionListener() {
             @Override
@@ -80,12 +83,11 @@ public class Parttime_Hangman extends JFrame {
         });
 
         pn.setLayout(null);
-        startBtn.setBounds(260, 670 , 160, 70);
+        startBtn.setBounds(260, 700 , 160, 60);
         startBtn.setBorderPainted(false);
         startBtn.setFocusPainted(false);
         startBtn.setContentAreaFilled(false);
 
-        pn.add(lb);
         pn.add(startBtn);
 
         fr.add(pn);
