@@ -111,13 +111,6 @@ public class UI extends JFrame {
 			setSize(550, 700);
 			setLayout(null);
 
-			// 학년 label 추가하기
-			gradeLabel = new JLabel(Integer.toString(player.timeManager.getLevel()));
-			gradeLabel.setFont(new Font("Serif", Font.BOLD, 25));
-			gradeLabel.setHorizontalAlignment(JLabel.CENTER);
-			gradeLabel.setVerticalAlignment(JLabel.CENTER);
-			add(gradeLabel);
-
 			// 저장, 로그아웃 버튼 추가하기
 			logoutIcon = new ImageIcon("src/img/logout_button.png");
 			logoutButton = new JButton(logoutIcon);
