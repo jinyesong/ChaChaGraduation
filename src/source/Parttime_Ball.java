@@ -5,11 +5,13 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -59,7 +61,7 @@ public class Parttime_Ball extends JFrame implements ActionListener{
             }
 		});
 		setVisible(true);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 	}
 	
 	public int getScore() {
@@ -113,17 +115,19 @@ public class Parttime_Ball extends JFrame implements ActionListener{
 	
 	class ReadyPanel extends JPanel{ //준비화면
 		JButton startBtn;
+
+		private Image background = new ImageIcon("src/img/ball_readyPanel.png").getImage();
 		
 		public ReadyPanel() {
-			setLayout(new BorderLayout());
+			setLayout(null);
 			
-			JLabel title = new JLabel("공피하기 게임");
-			title.setFont(new Font("Serif", Font.BOLD, 25));
-			JLabel guide = new JLabel("파란 공을 피해 빨간 공과 초록 공을 클릭하세요!\n 빨간공 +1 / 초록공 +2 / 파란공 -1");
-			startBtn = new JButton("시작");
-			add(title, BorderLayout.NORTH);
-			add(guide, BorderLayout.CENTER);
-			add(startBtn, BorderLayout.SOUTH);
+			startBtn = new JButton(); //게임 시작하기 버튼
+			startBtn.setBounds(260, 170, 80, 30);
+
+			startBtn.setBorderPainted(false);
+            startBtn.setFocusPainted(false);
+            startBtn.setContentAreaFilled(false);
+			add(startBtn);
 			
 			startBtn.addActionListener(e -> {
 	            setVisible(false);
@@ -131,6 +135,9 @@ public class Parttime_Ball extends JFrame implements ActionListener{
 	            startGame();
 			});
 		}
+		public void paintComponent(Graphics g) {
+			g.drawImage(background, 0, 0, 600, 200, null);
+	}
 	}
 	
 	class BallPanel extends JPanel{
