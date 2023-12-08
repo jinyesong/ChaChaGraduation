@@ -32,7 +32,7 @@ public class Parttime_Ball extends JFrame implements ActionListener{
 	JLabel scoreLabel;
 	int score;
 	
-	private static final int GAME_TIME_SECONDS = 20;
+	private static final int GAME_TIME_SECONDS = 10;
     private Timer gameTimer;
 	
 	Parttime_Ball(Player player, Stat ui){
