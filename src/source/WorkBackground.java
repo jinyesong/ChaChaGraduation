@@ -13,24 +13,26 @@ import source.UI.Stat;
 public class WorkBackground extends JFrame {
 	private Player player;
 	private Stat ui;
-	private Image background;
-	private ImageIcon poopAvoidButtonImage, ballClickButtonImage, hangManButtonImage;
 	private JButton poopAvoidButton, ballClickButton, hangManButton;
 
 	public WorkBackground(Player player, Stat ui) {
 		this.player = player;
 		this.ui = ui;
-		background = new ImageIcon("src/img/work_background.png").getImage();
-		poopAvoidButtonImage = new ImageIcon("src/img/poopgame_button.png");
-		poopAvoidButton = new JButton(poopAvoidButtonImage);
-		ballClickButtonImage = new ImageIcon("src/img/ballclickgame_button.png");
-		ballClickButton = new JButton(ballClickButtonImage);
-		hangManButtonImage = new ImageIcon("src/img/hangman_button.png");
-		hangManButton = new JButton(hangManButtonImage);
+		
+		JPanel pn = new JPanel(){
+            Image background = new ImageIcon("src/img/work_background_temp.png").getImage();
+            public void paintComponent(Graphics g) {
+                g.drawImage(background, 0, 0, 555, 700, null);
+        }
+        };
+
+		pn.setLayout(null);
+		poopAvoidButton = new JButton();
+		ballClickButton = new JButton();
+		hangManButton = new JButton();
 
 		setTitle("차차 과외 알바하기");
 		setSize(564, 737);
-		setLayout(null);
 
 		for (JButton button : new JButton[] { poopAvoidButton, ballClickButton, hangManButton }) {
 			button.setBorderPainted(false);
@@ -60,17 +62,16 @@ public class WorkBackground extends JFrame {
 			dispose();
 		}));
 
-		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-	}
+		poopAvoidButton.setBounds(170, 100, 240, 70);
+		ballClickButton.setBounds(170, 190, 240, 70);
+		hangManButton.setBounds(170, 260, 240, 70);
 
-	public void paint(Graphics g) {
-		g.drawImage(background, 0, 0, 564, 737, null);
+		pn.add(poopAvoidButton);
+		pn.add(ballClickButton);
+		pn.add(hangManButton);
+
+		add(pn);
 		
-		int gap = 15;
-		poopAvoidButton.setBounds(170, 100, poopAvoidButtonImage.getIconWidth(), poopAvoidButtonImage.getIconHeight());
-		ballClickButton.setBounds(170, 100 + poopAvoidButtonImage.getIconHeight() + gap, ballClickButtonImage.getIconWidth(),
-				ballClickButtonImage.getIconHeight());
-		gap += 15;
-		hangManButton.setBounds(170, 100 + 2*ballClickButtonImage.getIconHeight() + gap, hangManButtonImage.getIconWidth(), hangManButtonImage.getIconHeight());
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 	}
 }

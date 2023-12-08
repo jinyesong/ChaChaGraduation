@@ -25,36 +25,75 @@ public class Parttime_Hangman extends JFrame {
     private JTextField inputField;                      //정답을 입력할 텍스트필드
     private JButton guessButton;                        //알파벳 입력 후 추측 버튼 클릭을 통해 확인
     private JTextArea outputArea;  
-    private int redFill;
+    private int waterFill;
     private Image currentImage;
     private Player player;
     private Stat ui;
-    
+    private static int startcnt;
 
     public Parttime_Hangman(Player player, Stat ui) {
         try {
         	this.player = player;
         	this.ui = ui;
+            if (startcnt == 0) {
+                firstScreen();
+            }
             readText();                                                 //hangman.txt 에서 문제를 불러옴
             this.index = (int) (this.wordList.size() * Math.random());  //문제는 랜덤하게 지정
             this.question = wordList.get(index);                        
             this.limit = 10;                                            //제한횟수는 10으로 고정
             toUpperQ = question.toUpperCase();                          //문제의 알파벳을 모두 대문자로 변환
             underscoreMaker();                                          //문제의 처음 형태를 밑줄로 표시하는 함수
-
+            
             componentsMaker();                                          //추측 버튼과 알파벳 입력 필드 구성
 
             setTitle("행맨 게임");      
-            setSize(550,700);       
-            setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            setSize(700,800);       
+            setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             setLocationRelativeTo(null);                              //모니터 중앙에 표시
             setLayout(new BorderLayout());                              
             addComponents();                                            //입력 결과와 차차그림(행맨) 표시
-            setVisible(true);
+            
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
+    public void firstScreen() {
+        startcnt = 1;
+        JFrame fr = new JFrame("행맨 게임");
+        fr.setSize(700,800);
+        fr.setLocationRelativeTo(null);
+
+        JPanel pn = new JPanel(){
+            Image background = new ImageIcon("src/img/hangman_readyPanel.png").getImage();
+            public void paintComponent(Graphics g) {
+                g.drawImage(background, 0, 0, 690, 780, null);
+        }
+        };
+
+        JButton startBtn = new JButton(); //시작하기 버튼
+
+        startBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                fr.dispose();
+                new Parttime_Hangman(player, ui).setVisible(true);
+            }
+        });
+
+        pn.setLayout(null);
+        startBtn.setBounds(260, 700 , 160, 60);
+        startBtn.setBorderPainted(false);
+        startBtn.setFocusPainted(false);
+        startBtn.setContentAreaFilled(false);
+
+        pn.add(startBtn);
+
+        fr.add(pn);
+        fr.setVisible(true);
+    }
+
 
     private void readText() throws IOException {                        //문제 불러오는 부분
         try (BufferedReader br = new BufferedReader(new FileReader("src/hangman.txt"))) {
@@ -98,7 +137,7 @@ public class Parttime_Hangman extends JFrame {
         inputPanel.add(label);
         inputPanel.add(inputField);
         inputPanel.add(guessButton);
-        inputPanel.setBackground(Color.cyan);
+        inputPanel.setBackground(new Color(0, 160, 186));
 
             JPanel hangmanPanel = new JPanel() {
             @Override
@@ -116,12 +155,12 @@ public class Parttime_Hangman extends JFrame {
             g2d.setColor(Color.BLACK);
 
                 // 차차그림 들어갈 곳
-            g2d.setStroke(new BasicStroke(3));
+            g2d.setStroke(new BasicStroke(5));
             g2d.drawRect(x, y, rectWidth, rectHeight);
 
-            g2d.setColor(Color.RED);
-            int redHeight = rectHeight * redFill / 100;
-            g2d.fillRect(x,y + (rectHeight - redHeight) , rectWidth , redHeight);
+            g2d.setColor(new Color(0, 160, 186));
+            int waterHeight = rectHeight * waterFill / 100;
+            g2d.fillRect(x,y + (rectHeight - waterHeight) , rectWidth , waterHeight);
 
             // 그릴 이미지 로드
             currentImage = new ImageIcon("src/img/차차.png").getImage();
@@ -131,7 +170,7 @@ public class Parttime_Hangman extends JFrame {
             } 
             if (underscore.equals(correct)) { //정답 시
                 currentImage = new ImageIcon("src/img/해냈차차.png").getImage();
-                redFill = 0;
+                waterFill = 0;
                 repaint();
             }
             // 이미지를 사각형 안에 그리기
@@ -148,7 +187,6 @@ public class Parttime_Hangman extends JFrame {
 
     private void processGuess() { //알파벳을 받는 순간 시작
         answer = inputField.getText();
-        System.out.println(question + underscore);
         if (answer.length() != 1) {
             outputArea.append("한글자만 입력 가능합니다!.\n");
             return;
@@ -161,13 +199,12 @@ public class Parttime_Hangman extends JFrame {
         
         if (underscore.equals(correct)) {
             endGame(true); //정답을 맞추면 true
-
+            
             
         } else {
             limit--;
-            redFill = 100 - (limit * 10);
+            waterFill = 100 - (limit * 10);
             outputArea.setText("현재 상태 : " + underscore + "\n" + "남은 횟수 : " + (limit));
-            currentImage = new ImageIcon("src/img/틀렸차차.png").getImage();
             
         }
         
@@ -210,9 +247,15 @@ public class Parttime_Hangman extends JFrame {
         	earnedMoney = 0;
         }
         
-        JOptionPane.showMessageDialog(null, "축하합니다! "+ earnedMoney + "만큼 머니 스탯이 상승합니다!");
+        JOptionPane.showMessageDialog(null, "게임 종료! "+ earnedMoney + "만큼 머니 스탯이 상승합니다!");
         player.setMoney(player.getMoney() + earnedMoney);
         ui.repaint();
         dispose();
+    }
+
+    @Override
+    public void dispose() {            //게임이 종료될 때마다 설명화면 재출력을 위해 startcnt 0으로 초기화
+        super.dispose();
+        startcnt = 0;
     }
 }
