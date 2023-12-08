@@ -9,6 +9,7 @@ class FestivalEventDialog extends JDialog {
     private JLabel festivalLabel;
 
     public FestivalEventDialog(Player player) {
+    	// (GUI Container and Layout Manager)
         super((JFrame) null, "백마 대동제", true);
         this.player = player;
 
@@ -55,6 +56,7 @@ class FestivalEventDialog extends JDialog {
         add(layeredPane, BorderLayout.CENTER);
         
         // 플레이어의 선택 별로 스탯 조절
+        // (Lambda)
         enjoyFestivalButton.addActionListener(e -> {
             player.setKnowledge(player.getKnowledge() - 40);
             player.setHappiness(player.getHappiness() + 20);
@@ -74,20 +76,3 @@ class FestivalEventDialog extends JDialog {
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
     }
 }
-
-//    public void WiterExam(Player player) {
-//        int currentLevel = player.timeManager.getLevel();
-//        int currentKnowledge = player.getKnowledge();
-//
-//        if (currentLevel == 1 && currentKnowledge >= 30) {
-//            player.setLevel(2);
-//            player.setKnowledge(0);
-//        } else if (currentLevel == 2 && currentKnowledge >= 60) {
-//            player.setLevel(3);
-//            player.setKnowledge(0);
-//        } else if (currentLevel == 3 && currentKnowledge >= 90) {
-//            player.setLevel(4);
-//            player.setKnowledge(0);
-//        }
-//        // 4학년의 경우에는 어떻게 할건지?
-//    }
