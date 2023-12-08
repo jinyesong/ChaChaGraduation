@@ -6,8 +6,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.Point;
-import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -68,7 +67,7 @@ public class UI extends JFrame {
 				dispose();
 				if (70 < player.getKnowledge() && player.getMoney() >= 500) { // 지식 70이상, 돈 500이상 -> 대학원 엔딩
 					new GraduateSchoolEnding();
-				} else if (50 < player.getKnowledge()) { // 지식 50이상, 돈 500미만 -> 취업 엔딩
+				} else if (50 < player.getKnowledge() && 70 > player.getKnowledge() && 500 > player.getMoney()) { // 지식 50이상, 돈 500미만 -> 취업 엔딩
 					new EmploymentEnding();
 				} else{ // 졸업 -> 중간엔딩
 					new GraduationEnding();
@@ -385,6 +384,7 @@ public class UI extends JFrame {
 			});
 			sleepButton.addActionListener(e -> {
 				player.setHappiness(player.getHappiness() + 5);
+				player.setKnowledge(player.getKnowledge() - 1);
 				showBackgoundFrame(sleepBackground);
 				clickCheck();
 			});
