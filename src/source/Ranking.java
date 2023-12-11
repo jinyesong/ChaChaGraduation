@@ -71,7 +71,7 @@ public class Ranking extends JFrame{
 		getContentPane().setBackground(Color.WHITE);
 		
 		JPanel knowledgeRanking = new KnowledgeRanking(knowMap);
-		knowledgeRanking.setBounds(0, 100, 500, 500);
+		knowledgeRanking.setBounds(30, 100, 500, 500);
 		knowledgeRanking.setBackground(Color.WHITE);
 		add(knowledgeRanking);
 		knowledgeRanking.setVisible(true); //default
