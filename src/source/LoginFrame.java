@@ -23,8 +23,8 @@ import javax.swing.JTextField;
 public class LoginFrame extends JFrame implements ActionListener{
  
     BufferedImage img = null;
+    // (Swing Components)
     JTextField loginTextField;
-    JPasswordField passwordField;
     JButton loginButton;
     JButton rankingButton;
     Ranking rankingFrame;
@@ -42,12 +42,14 @@ public class LoginFrame extends JFrame implements ActionListener{
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
  
         // 레이아웃 설정
+        // (GUI Container and Layout Manager)
         setLayout(null);
         JLayeredPane layeredPane = new JLayeredPane();
         layeredPane.setBounds(0, 0, 1600, 900);
         layeredPane.setLayout(null);
  
         // 이미지 받아오기
+        // (File I/O)
         try {
             img = ImageIO.read(new File("src/img/login_page.png"));
         } catch (IOException e) {
@@ -71,6 +73,7 @@ public class LoginFrame extends JFrame implements ActionListener{
         loginTextField.setBorder(javax.swing.BorderFactory.createEmptyBorder());
         
         // 로그인버튼 추가
+        // (GUI Event handling)
         loginButton = new JButton(new ImageIcon("src/img/login_button.png"));
         loginButton.setBounds(280, 450, 100, 55);
         loginButton.addActionListener(this);
