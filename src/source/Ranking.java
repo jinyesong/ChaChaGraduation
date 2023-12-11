@@ -1,5 +1,6 @@
 package source;
 
+import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -67,19 +68,23 @@ public class Ranking extends JFrame{
 		setTitle("차차 키우기 랭킹");
 		setLayout(null);
 		setLocationRelativeTo(null);
+		getContentPane().setBackground(Color.WHITE);
 		
 		JPanel knowledgeRanking = new KnowledgeRanking(knowMap);
-		knowledgeRanking.setBounds(50, 100, 500, 500);
+		knowledgeRanking.setBounds(0, 100, 500, 500);
+		knowledgeRanking.setBackground(Color.WHITE);
 		add(knowledgeRanking);
 		knowledgeRanking.setVisible(true); //default
 		
 		JPanel happinessRanking = new HappinessRanking(happMap);
-		happinessRanking.setBounds(50, 100, 500, 500);
+		happinessRanking.setBounds(0, 100, 500, 500);
+		happinessRanking.setBackground(Color.WHITE);
 		add(happinessRanking);
 		happinessRanking.setVisible(false);
 		
 		JPanel moneyRanking = new MoneyRanking(moneyMap);
-		moneyRanking.setBounds(50, 100, 500, 500);
+		moneyRanking.setBounds(0, 100, 500, 500);
+		moneyRanking.setBackground(Color.WHITE);
 		add(moneyRanking);
 		moneyRanking.setVisible(false);
 		
@@ -102,11 +107,11 @@ public class Ranking extends JFrame{
 			moneyRanking.setVisible(true);
 		});
 		
-		showKnowledgeBtn.setBounds(10, 10, 90, 40);
+		showKnowledgeBtn.setBounds(90, 30, 90, 40);
 		add(showKnowledgeBtn);
-		showHappinessBtn.setBounds(110, 10, 110, 40);
+		showHappinessBtn.setBounds(200, 30, 110, 40);
 		add(showHappinessBtn);
-		showMoneyBtn.setBounds(230, 10, 90, 40);
+		showMoneyBtn.setBounds(330, 30, 90, 40);
 		add(showMoneyBtn);
 		
 		setVisible(true);
@@ -118,7 +123,8 @@ public class Ranking extends JFrame{
 			knowMap.entrySet().stream()
 				.sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
 				.forEach(entry -> {
-					JLabel rankText = new JLabel(entry.getKey() + " : " + entry.getValue());
+					JLabel rankText = new JLabel(entry.getKey() + " : " + entry.getValue() + " ");
+					rankText.setFont(rankText.getFont().deriveFont(20.0f));
 					add(rankText);
 				});
 		}
@@ -129,7 +135,8 @@ public class Ranking extends JFrame{
 			happMap.entrySet().stream()
 			.sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
 			.forEach(entry -> {
-				JLabel rankText = new JLabel(entry.getKey() + " : " + entry.getValue());
+				JLabel rankText = new JLabel(entry.getKey() + " : " + entry.getValue() + " ");
+				rankText.setFont(rankText.getFont().deriveFont(20.0f));
 				add(rankText);
 			});
 		}
@@ -140,7 +147,8 @@ public class Ranking extends JFrame{
 			moneyMap.entrySet().stream()
 			.sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
 			.forEach(entry -> {
-				JLabel rankText = new JLabel(entry.getKey() + " : " + entry.getValue());
+				JLabel rankText = new JLabel(entry.getKey() + " : " + entry.getValue() + " ");
+				rankText.setFont(rankText.getFont().deriveFont(20.0f));
 				add(rankText);
 			});
 		}
