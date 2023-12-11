@@ -9,6 +9,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -115,7 +116,7 @@ public class Ranking extends JFrame{
 	class KnowledgeRanking extends JPanel{
 		KnowledgeRanking(Map<String, Integer> knowMap){
 			knowMap.entrySet().stream()
-				.sorted(Map.Entry.comparingByValue())
+				.sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
 				.forEach(entry -> {
 					JLabel rankText = new JLabel(entry.getKey() + " : " + entry.getValue());
 					add(rankText);
@@ -126,7 +127,7 @@ public class Ranking extends JFrame{
 	class HappinessRanking extends JPanel{
 		HappinessRanking(Map<String, Integer> happMap){
 			happMap.entrySet().stream()
-			.sorted(Map.Entry.comparingByValue())
+			.sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
 			.forEach(entry -> {
 				JLabel rankText = new JLabel(entry.getKey() + " : " + entry.getValue());
 				add(rankText);
@@ -137,7 +138,7 @@ public class Ranking extends JFrame{
 	class MoneyRanking extends JPanel{
 		MoneyRanking(Map<String, Integer> moneyMap){
 			moneyMap.entrySet().stream()
-			.sorted(Map.Entry.comparingByValue())
+			.sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
 			.forEach(entry -> {
 				JLabel rankText = new JLabel(entry.getKey() + " : " + entry.getValue());
 				add(rankText);

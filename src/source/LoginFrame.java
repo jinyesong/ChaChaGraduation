@@ -111,10 +111,6 @@ public class LoginFrame extends JFrame implements ActionListener{
 		if(e.getSource() == loginButton) {
 			String id = loginTextField.getText();
 			FileIO fi = new FileIO();
-//			if(id == "") { //빈문자열
-//				System.out.println("비어있음");
-//				actionPerformed(e);
-//			}
 			Player player;
 			if(fi.findPlayer(id)) { //존재하는 아이디
 				JOptionPane.showMessageDialog(null, "로그인 성공!");
