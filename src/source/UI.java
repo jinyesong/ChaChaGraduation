@@ -93,14 +93,10 @@ public class UI extends JFrame {
 		//레벨업
 		if(player.timeManager.getClickCount()%40 == 0) {
 			if(70 < player.getKnowledge()) { //장학금
-				if (player.timeManager.getLevel() <= 4){
-				JOptionPane.showMessageDialog(null, "축하합니다. 성적우수장학생으로 선정되어 200만원의 장학금을 받습니다!\n"+player.timeManager.getLevel()+"학년이 되었습니다!");
-				player.setMoney(player.getMoney() + 200);
-				}
+				if (player.timeManager.getLevel() <= 4){JOptionPane.showMessageDialog(null, "축하합니다. 성적우수장학생으로 선정되어 200만원의 장학금을 받습니다!\n"+player.timeManager.getLevel()+"학년이 되었습니다!");
+				player.setMoney(player.getMoney() + 200);}
 			}else {
-				if (player.timeManager.getLevel() <= 4) {
-				JOptionPane.showMessageDialog(null, player.timeManager.getLevel()+"학년이 되었습니다!");
-				}
+				if (player.timeManager.getLevel() <= 4) {JOptionPane.showMessageDialog(null, player.timeManager.getLevel()+"학년이 되었습니다!");}
 			}
 		}
 
