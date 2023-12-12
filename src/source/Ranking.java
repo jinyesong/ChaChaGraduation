@@ -21,8 +21,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class Ranking extends JFrame{
-	//지식, 행복도, 돈 각각의 랭킹을 아이디 이름으로 나열함
-	//각각의 함수로 구현하고 모든 파일의 특정 줄을 읽어서 ArrayList에 저장
 	Map<String, Integer> knowMap;
 	Map<String, Integer> happMap;
 	Map<String, Integer> moneyMap;
@@ -32,11 +30,11 @@ public class Ranking extends JFrame{
 		File dir = new File("src/user");
 		//전체 파일 리스트
 		ArrayList<File> files = new ArrayList<File>(Arrays.asList(dir.listFiles()));
-		//지식 랭킹 리스트
+		//지식 랭킹 
 		knowMap = new HashMap<String, Integer>();
-		//행복도 랭킹 리스트
+		//행복도 랭킹 
 		happMap = new HashMap<String, Integer>();
-		//머니 랭킹 리스트
+		//머니 랭킹 
 		moneyMap = new HashMap<String, Integer>();
 		
 		for(File f : files) {
@@ -47,7 +45,6 @@ public class Ranking extends JFrame{
 					String fileName = f.getName().substring(0, f.getName().lastIndexOf('.'));
 					if(count == 0) { //돈
 						moneyMap.put(fileName, Integer.parseInt(line));
-						//System.out.println(fileName+ Integer.parseInt(line));
 					}
 					else if(count == 1) { //지식
 						knowMap.put(fileName, Integer.parseInt(line));
