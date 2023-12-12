@@ -65,10 +65,10 @@ public class UI extends JFrame {
 
 			goEnding.addActionListener(e -> {
 				dispose();
-				if (70 < player.getKnowledge() && player.getMoney() >= 500) { // 지식 70이상, 돈 500이상 -> 대학원 엔딩
+				if (70 <= player.getKnowledge() && player.getMoney() >= 500) { // 지식 70이상, 돈 500이상 -> 대학원 엔딩
 					dispose();
 					new GraduateSchoolEnding();
-				} else if (50 < player.getKnowledge() && 70 > player.getKnowledge() && 500 > player.getMoney()) { // 지식 50이상, 돈 500미만 -> 취업 엔딩
+				} else if (50 <= player.getKnowledge() && 500 > player.getMoney()) { // 지식 50이상, 돈 500미만 -> 취업 엔딩
 					dispose();
 					new EmploymentEnding();
 				} else{ // 졸업 -> 중간엔딩
@@ -93,10 +93,10 @@ public class UI extends JFrame {
 		//레벨업
 		if(player.timeManager.getClickCount()%40 == 0) {
 			if(70 < player.getKnowledge()) { //장학금
-				JOptionPane.showMessageDialog(null, "축하합니다. 성적우수장학생으로 선정되어 200만원의 장학금을 받습니다!\n"+player.timeManager.getLevel()+"학년이 되었습니다!");
-				player.setMoney(player.getMoney() + 200);
+				if (player.timeManager.getLevel() <= 4){JOptionPane.showMessageDialog(null, "축하합니다. 성적우수장학생으로 선정되어 200만원의 장학금을 받습니다!\n"+player.timeManager.getLevel()+"학년이 되었습니다!");
+				player.setMoney(player.getMoney() + 200);}
 			}else {
-				JOptionPane.showMessageDialog(null, player.timeManager.getLevel()+"학년이 되었습니다!");
+				if (player.timeManager.getLevel() <= 4) {JOptionPane.showMessageDialog(null, player.timeManager.getLevel()+"학년이 되었습니다!");}
 			}
 		}
 
